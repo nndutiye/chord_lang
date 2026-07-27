@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
+import 'package:chord_lang/view/_MyHomePageState.dart';
 void main() {
   runApp(const MyApp());
 }
