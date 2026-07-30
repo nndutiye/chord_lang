@@ -1,3 +1,4 @@
+import 'package:chord_lang/PracticeView.dart';
 import 'package:chord_lang/model/Scale.dart';
 import 'package:chord_lang/model/notes.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
     connectToMidiDevice();
     
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Chord Lang',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -148,15 +149,19 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('Select a scale:'),
-            DropdownButtonExample()
+            DropdownButtonExample(),
+            OutlinedButton(
+            onPressed: () {
+              
+
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
+
+            },
+            child: Text('Start Practice Session'),
+          )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
