@@ -18,7 +18,7 @@ class Practiceview extends StatelessWidget {
 
     
     final sub = midi.onMidiDataReceived!.listen(
-      (data) {
+      (data) async {
         String s = data.message.data[1].toString();
         //String t = data.toString();
         print('U8intlist: $s');
@@ -27,7 +27,7 @@ class Practiceview extends StatelessWidget {
     );
       
     //print("The data is: " + received.first.message.data.toString());
-    await Future<void>.delayed(const Duration(seconds: 1000));
+    //await Future<void>.delayed(const Duration(seconds: 1000));
 
     sub.cancel();
   }
