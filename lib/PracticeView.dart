@@ -3,6 +3,7 @@ import 'dart:js_interop';
 
 import 'package:chord_lang/main.dart';
 import 'package:chord_lang/model/MidiValue.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
@@ -27,6 +28,7 @@ class Practiceview extends StatelessWidget {
       print("conneced!");
     }
 
+    Set<String> testChord = {"C3", "E3", "G3"};
     // This is the centerpiece of the whole application
     List<String> noteCharList = [];
     final sub_init = midi.onMidiDataReceived!.listen(
@@ -48,10 +50,11 @@ class Practiceview extends StatelessWidget {
           noteCharList.add(noteChar);
         }
 
-
-
         print(noteCharList);
 
+        if(setEquals(testChord, noteCharList.toSet())){
+          print("played correct note");
+        }
       },
     );
 
