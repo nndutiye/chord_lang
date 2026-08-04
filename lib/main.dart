@@ -151,15 +151,16 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text('Select a scale:'),
             DropdownButtonExample(),
             OutlinedButton(
-            onPressed: () {
+              onPressed: () {
 
 
 
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
 
-            },
-            child: Text('Start Practice Session'),
-          )
+              },
+
+              child: Text('Start Practice Session'),
+            )
           ],
         ),
       ),
