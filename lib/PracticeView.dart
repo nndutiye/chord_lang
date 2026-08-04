@@ -55,6 +55,7 @@ class Practiceview extends StatelessWidget {
       },
     );
 
+    noteCharList.clear();
 
     return sub_init;
 
@@ -76,17 +77,24 @@ class Practiceview extends StatelessWidget {
     //cancelSubscription(sub);
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),
-      body: OutlinedButton(
-              onPressed: () {
-                cancelSubscription(sub);
+      body: Column( 
+        children: [
+          Spacer(flex: 1),
+          Center(
+            child: OutlinedButton(
+                  onPressed: () {
+                    cancelSubscription(sub);
 
 
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
 
-              },
+                  },
 
-              child: Text('End Practice Session'),
-            ),
+                  child: Text('End Practice Session'),
+          ),
+          ),
+        ]
+    ),
     );
   }
 }
