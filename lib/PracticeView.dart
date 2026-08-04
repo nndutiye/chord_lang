@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:js_interop';
 
 import 'package:chord_lang/main.dart';
 import 'package:chord_lang/model/MidiValue.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
+import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
 
 class Practiceview extends StatelessWidget {
   const Practiceview({super.key});
@@ -24,21 +26,36 @@ class Practiceview extends StatelessWidget {
     if (device.connected) {
       print("conneced!");
     }
-    
+
+    // This is the centerpiece of the whole application
+    List<String> noteCharList = [];
     final sub_init = midi.onMidiDataReceived!.listen(
       (data) {
-        //print('Here');
-        String s = data.message.data[1].toString();
-        //String t = data.toString();
-        print('U8intlist: $s');
-        MidiValue mv = MidiValue();
-        String noteChar = mv.getNoteStringFromMidiValue(s)!;
+        MidiMessage midiMessage = data.message;
+        String noteInput = midiMessage.data[1].toString();
+        //print('U8intlist: $s');
 
-        print('Note Char: $noteChar');
-        //print('Just data: $t');
+        MidiValue mv = MidiValue();
+        String noteChar = mv.getNoteStringFromMidiValue(noteInput)!;
+
+        //print('Note Char: $noteChar');
+
+        if((midiMessage is! NoteOnMessage)) {
+          noteCharList.remove(noteChar);
+        }
+
+        if(midiMessage is NoteOnMessage) {
+          noteCharList.add(noteChar);
+        }
+
+
+
+        print(noteCharList);
 
       },
     );
+
+
     return sub_init;
 
     //await Future<void>.delayed(const Duration(seconds: 1000));
