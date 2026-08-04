@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chord_lang/main.dart';
+import 'package:chord_lang/model/MidiValue.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 
@@ -30,6 +31,10 @@ class Practiceview extends StatelessWidget {
         String s = data.message.data[1].toString();
         //String t = data.toString();
         print('U8intlist: $s');
+        MidiValue mv = MidiValue();
+        String noteChar = mv.getNoteStringFromMidiValue(s)!;
+
+        print('Note Char: $noteChar');
         //print('Just data: $t');
 
       },
