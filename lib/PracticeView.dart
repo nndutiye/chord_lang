@@ -82,6 +82,11 @@ class Practiceview extends StatelessWidget {
       appBar: AppBar(title: const Text('Practice Session')),
       body: Column( 
         children: [
+          Image.asset(
+            'assets/images/Am.png',
+            width: 600,
+            height: 500,
+          ),
           Spacer(flex: 1),
           Center(
             child: OutlinedButton(
