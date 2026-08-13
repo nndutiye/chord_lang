@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import 'package:chord_lang/main.dart';
+import 'package:chord_lang/model/ChordGenerator.dart';
 import 'package:chord_lang/model/MidiValue.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,12 @@ class _PracticeviewState extends State<Practiceview> {
     });
   }
 
-  Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice() async {
+  void generateChords(String s){
+    ChordGenerator cg = ChordGenerator(s);
+    print(cg.getTonicAsMidi());
+  }
+  Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(String _scale_selection) async {
+    generateChords(_scale_selection);
     final midi = MidiCommand();
     
     //final received = <MidiDataReceivedEvent>[];
@@ -99,7 +105,7 @@ class _PracticeviewState extends State<Practiceview> {
 
   @override
   Widget build(BuildContext context) {
-    Future<StreamSubscription<MidiDataReceivedEvent>> sub = connectToMidiDevice();
+    Future<StreamSubscription<MidiDataReceivedEvent>> sub = connectToMidiDevice(_scale_selection);
     //cancelSubscription(sub);
     if(_major) {
       print("selecetd major");
