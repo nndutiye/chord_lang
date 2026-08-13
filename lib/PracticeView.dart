@@ -9,19 +9,22 @@ import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
 
 class Practiceview extends StatefulWidget {
-  const Practiceview(this.scale_selection, {super.key});
+  const Practiceview(this.scale_selection, this.major, {super.key});
   
   final scale_selection;
+  final bool major;
   @override
-  State<Practiceview> createState() => _PracticeviewState(scale_selection);
+  State<Practiceview> createState() => _PracticeviewState(scale_selection, major);
 }
 
 class _PracticeviewState extends State<Practiceview> {
-  _PracticeviewState(String scale_selection) {
+  _PracticeviewState(String scale_selection, bool major) {
     this._scale_selection = scale_selection;
+    this._major = major;
   }
+  bool _major = true;
   String _scale_selection = "";
-  bool _played_correct_chord = false;
+  //bool _played_correct_chord = false;
   String _chord_image_name = 'assets/images/Am.png';
 
   void _newChord(String s) {
@@ -98,6 +101,11 @@ class _PracticeviewState extends State<Practiceview> {
   Widget build(BuildContext context) {
     Future<StreamSubscription<MidiDataReceivedEvent>> sub = connectToMidiDevice();
     //cancelSubscription(sub);
+    if(_major) {
+      print("selecetd major");
+    } else {
+      print("selected minor");
+    }
     print(_scale_selection);
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),

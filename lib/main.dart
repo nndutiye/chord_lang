@@ -1,4 +1,5 @@
 import 'dart:js_interop';
+import 'package:flutter_switch/flutter_switch.dart';
 
 import 'package:chord_lang/PracticeView.dart';
 import 'package:chord_lang/model/Scale.dart';
@@ -82,6 +83,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _dropdownValue = 'C';
+  bool _major = true;
 
   @override
   Widget build(BuildContext context) {
@@ -104,24 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Spacer(),
             const Text('Select a scale:'),
 
             DropdownButton<String>(
@@ -139,11 +127,27 @@ class _MyHomePageState extends State<MyHomePage> {
               items: scale.getAllScalesAsStringList().map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(value: value, child: Text(value));
               }).toList(),
-          ),
-
+            ),
+            
+            FlutterSwitch(
+                  activeText: "major",
+                  inactiveText: "minor",
+                  value: _major,
+                  valueFontSize: 10.0,
+                  width: 80,
+                  height: 30,
+                  borderRadius: 30.0,
+                  showOnOff: true,
+                  onToggle: (val) {
+                    setState(() {
+                      _major = val;
+                    });
+                  },
+            ),
+            Spacer(),
             OutlinedButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview(_dropdownValue))); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview(_dropdownValue, _major))); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
               },
 
               child: Text('Start Practice Session'),

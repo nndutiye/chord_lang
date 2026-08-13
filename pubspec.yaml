@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_midi_command: ^1.0.7
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_test:
