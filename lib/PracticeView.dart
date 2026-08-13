@@ -8,9 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
 
-class Practiceview extends StatelessWidget {
+class Practiceview extends StatefulWidget {
   const Practiceview({super.key});
-  
+
+  @override
+  State<Practiceview> createState() => _PracticeviewState();
+}
+
+class _PracticeviewState extends State<Practiceview> {
+  bool _played_correct_chord = false;
+  String _chord_image_name = 'assets/images/Am.png';
+
+  void _newChord(String s) {
+    setState(() {
+      _chord_image_name = s;
+    });
+  }
 
   Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice() async {
     final midi = MidiCommand();
@@ -54,6 +67,7 @@ class Practiceview extends StatelessWidget {
 
         if(setEquals(testChord, noteCharList.toSet())){
           print("played correct note");
+          _newChord('assets/images/B°.png');
         }
       },
     );
@@ -72,8 +86,7 @@ class Practiceview extends StatelessWidget {
     sub.cancel();
   }
 
-    
-  
+
   @override
   Widget build(BuildContext context) {
     Future<StreamSubscription<MidiDataReceivedEvent>> sub = connectToMidiDevice();
@@ -83,7 +96,7 @@ class Practiceview extends StatelessWidget {
       body: Column( 
         children: [
           Image.asset(
-            'assets/images/Am.png',
+            _chord_image_name,
             width: 600,
             height: 500,
           ),
