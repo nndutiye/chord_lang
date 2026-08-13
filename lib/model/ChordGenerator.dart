@@ -2,7 +2,7 @@ class ChordGenerator {
   final String scale;
   const ChordGenerator(this.scale);
   
-  String getTonicAsMidi() {
+  String getTonicAsMidiString() {
     return scale + '3';
   }
 }
