@@ -31,4 +31,20 @@ class ChordGenerator {
 
     return result;
   }
+
+  List<String> getMinorScaleNotesAsString() {
+    MidiValue mv = MidiValue();
+
+    List<String> result = [];
+    int current_distance = getTonicAsMidiValue();
+
+    result.add(getTonicAsMidiString());
+
+    for (int step in minor_half_steps) {
+      current_distance += step;
+      result.add(mv.getNoteStringFromMidiValue(current_distance.toString())!);
+    }
+
+    return result;
+  }
 }
