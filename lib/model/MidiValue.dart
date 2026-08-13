@@ -101,4 +101,10 @@ class MidiValue {
   String? getNoteStringFromMidiValue(String s) {
     return this.midiValueMap[s];
   }
+
+  int getNoteMidiValue(String s) {
+    print("input: " + s);
+    var midi_key = midiValueMap.keys.firstWhere((k) => midiValueMap[k] == s);
+    return int.parse(midi_key);
+  }
 }

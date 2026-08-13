@@ -37,6 +37,7 @@ class _PracticeviewState extends State<Practiceview> {
   void generateChords(String s){
     ChordGenerator cg = ChordGenerator(s);
     print(cg.getTonicAsMidiString());
+    print(cg.getTonicAsMidiValue().toString());
   }
   Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(String _scale_selection) async {
     generateChords(_scale_selection);
@@ -107,12 +108,13 @@ class _PracticeviewState extends State<Practiceview> {
   Widget build(BuildContext context) {
     Future<StreamSubscription<MidiDataReceivedEvent>> sub = connectToMidiDevice(_scale_selection);
     //cancelSubscription(sub);
-    if(_major) {
-      print("selecetd major");
+    /*if(_major) {
+      //print("selecetd major");
     } else {
-      print("selected minor");
+      //print("selected minor");
     }
-    print(_scale_selection);
+    */
+    //print(_scale_selection);
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),
       body: Column( 
