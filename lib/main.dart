@@ -1,3 +1,6 @@
+import 'dart:js_interop';
+import 'package:flutter_switch/flutter_switch.dart';
+
 import 'package:chord_lang/PracticeView.dart';
 import 'package:chord_lang/model/Scale.dart';
 import 'package:chord_lang/model/notes.dart';
@@ -79,40 +82,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    /*
-    final platform = _FakePlatform();
-    MidiCommand.setPlatformOverride(platform);
-    final midi = MidiCommand();
-
-    final device = (await midi.devices)!.first;
-    expect(device.connected, isFalse);
-
-    await midi.connectToDevice(
-      device,
-      awaitConnectionTimeout: const Duration(seconds: 1),
-    );
-    */
-    /*
-    Future<List<MidiDevice>?> get devices async =>
-      showBleHost ? <MidiDevice>[coreMidiDevice] : <MidiDevice>[];
-    */
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  
+  String _dropdownValue = 'C';
+  bool _major = true;
 
   @override
   Widget build(BuildContext context) {
+    //const dp = DropdownButtonExample();
+    Scale scale = Scale();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -130,33 +106,48 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Spacer(),
             const Text('Select a scale:'),
-            DropdownButtonExample(),
+
+            DropdownButton<String>(
+              value: _dropdownValue,
+              icon: const Icon(Icons.arrow_downward),
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(height: 2, color: Colors.deepPurpleAccent),
+              onChanged: (String? value) {
+                // This is called when the user selects an item.
+                setState(() {
+                  _dropdownValue = value!;
+                });
+              },
+              items: scale.getAllScalesAsStringList().map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(value: value, child: Text(value));
+              }).toList(),
+            ),
+            
+            FlutterSwitch(
+                  activeText: "major",
+                  inactiveText: "minor",
+                  value: _major,
+                  valueFontSize: 10.0,
+                  width: 80,
+                  height: 30,
+                  borderRadius: 30.0,
+                  showOnOff: true,
+                  onToggle: (val) {
+                    setState(() {
+                      _major = val;
+                    });
+                  },
+            ),
+            Spacer(),
             OutlinedButton(
               onPressed: () {
-
-
-
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
-
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview(_dropdownValue, _major))); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
               },
 
               child: Text('Start Practice Session'),
@@ -164,38 +155,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class DropdownButtonExample extends StatefulWidget {
-  const DropdownButtonExample({super.key});
-
-  @override
-  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
-}
-
-class _DropdownButtonExampleState extends State<DropdownButtonExample> {
-  Scale scale = Scale();
-  late String dropdownValue = scale.getAllScalesAsStringList().first;
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(height: 2, color: Colors.deepPurpleAccent),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
-      items: scale.getAllScalesAsStringList().map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(value: value, child: Text(value));
-      }).toList(),
     );
   }
 }
