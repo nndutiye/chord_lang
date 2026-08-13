@@ -9,13 +9,18 @@ import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
 
 class Practiceview extends StatefulWidget {
-  const Practiceview({super.key});
-
+  const Practiceview(this.scale_selection, {super.key});
+  
+  final scale_selection;
   @override
-  State<Practiceview> createState() => _PracticeviewState();
+  State<Practiceview> createState() => _PracticeviewState(scale_selection);
 }
 
 class _PracticeviewState extends State<Practiceview> {
+  _PracticeviewState(String scale_selection) {
+    this._scale_selection = scale_selection;
+  }
+  String _scale_selection = "";
   bool _played_correct_chord = false;
   String _chord_image_name = 'assets/images/Am.png';
 
@@ -44,6 +49,8 @@ class _PracticeviewState extends State<Practiceview> {
     Set<String> testChord = {"C3", "E3", "G3"};
     // This is the centerpiece of the whole application
     List<String> noteCharList = [];
+    List<String> chordNameList = []; // has to be generated
+
     final sub_init = midi.onMidiDataReceived!.listen(
       (data) {
         MidiMessage midiMessage = data.message;
@@ -91,6 +98,7 @@ class _PracticeviewState extends State<Practiceview> {
   Widget build(BuildContext context) {
     Future<StreamSubscription<MidiDataReceivedEvent>> sub = connectToMidiDevice();
     //cancelSubscription(sub);
+    print(_scale_selection);
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),
       body: Column( 

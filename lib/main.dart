@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:chord_lang/PracticeView.dart';
 import 'package:chord_lang/model/Scale.dart';
 import 'package:chord_lang/model/notes.dart';
@@ -79,40 +81,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    /*
-    final platform = _FakePlatform();
-    MidiCommand.setPlatformOverride(platform);
-    final midi = MidiCommand();
-
-    final device = (await midi.devices)!.first;
-    expect(device.connected, isFalse);
-
-    await midi.connectToDevice(
-      device,
-      awaitConnectionTimeout: const Duration(seconds: 1),
-    );
-    */
-    /*
-    Future<List<MidiDevice>?> get devices async =>
-      showBleHost ? <MidiDevice>[coreMidiDevice] : <MidiDevice>[];
-    */
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  
+  String _dropdownValue = 'C';
 
   @override
   Widget build(BuildContext context) {
+    const dp = DropdownButtonExample();
+    Scale scale = Scale();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -149,13 +123,28 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('Select a scale:'),
-            DropdownButtonExample(),
+            DropdownButton<String>(
+              value: _dropdownValue,
+              icon: const Icon(Icons.arrow_downward),
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(height: 2, color: Colors.deepPurpleAccent),
+              onChanged: (String? value) {
+                // This is called when the user selects an item.
+                setState(() {
+                  _dropdownValue = value!;
+                });
+              },
+              items: scale.getAllScalesAsStringList().map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(value: value, child: Text(value));
+              }).toList(),
+          ),
             OutlinedButton(
               onPressed: () {
+                String test = "test";
+                test = dp.runtimeType.toString();
 
-
-
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview(_dropdownValue))); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
 
               },
 
@@ -178,6 +167,10 @@ class DropdownButtonExample extends StatefulWidget {
 class _DropdownButtonExampleState extends State<DropdownButtonExample> {
   Scale scale = Scale();
   late String dropdownValue = scale.getAllScalesAsStringList().first;
+
+  String getSelection() {
+    return dropdownValue;
+  }
 
   @override
   Widget build(BuildContext context) {
