@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:js_interop';
 
+import 'package:chord_lang/SimpleSheetMusicView.dart';
 import 'package:chord_lang/main.dart';
 import 'package:chord_lang/model/ChordGenerator.dart';
 import 'package:chord_lang/model/MidiValue.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
+import 'package:simple_sheet_music/simple_sheet_music.dart';
 
 class TestsheetlibView extends StatefulWidget {
   const TestsheetlibView(this.scale_selection, this.major, {super.key});
@@ -120,11 +122,7 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
       appBar: AppBar(title: const Text('Test Session')),
       body: Column( 
         children: [
-          Image.asset(
-            _chord_image_name,
-            width: 600,
-            height: 500,
-          ),
+          const SimpleSheetMusicView(),
           Spacer(flex: 1),
           Center(
             child: OutlinedButton(
