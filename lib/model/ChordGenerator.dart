@@ -1,5 +1,6 @@
 import 'package:chord_lang/model/MidiValue.dart';
 
+// class responsible for giving certain notes and chords of a scale
 class ChordGenerator {
   final String scale;
   static const List<int> major_half_steps = [2,2,1,2,2,2]; // last one should be 1 but it's the tonic
@@ -8,7 +9,7 @@ class ChordGenerator {
   const ChordGenerator(this.scale);
   
   String getTonicAsMidiString() {
-    return this.scale + '3';
+    return '${this.scale}3';
   }
 
   int getTonicAsMidiValue() {
