@@ -18,7 +18,7 @@ class ChordGenerator {
   }
   
   String getTonicAsMidiString() {
-    return '${this.scale}3';
+    return '${this.scale}4';
   }
 
   int getTonicAsMidiValue() {

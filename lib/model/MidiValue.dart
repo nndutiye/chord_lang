@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:simple_sheet_music/simple_sheet_music.dart';
+
 class MidiValue {
   Map<String,String> midiValueMap = {
     '21' : 'A0',
@@ -97,6 +101,69 @@ class MidiValue {
     
     '108': 'C8',
   };
+  
+  Map<String,Pitch> stringPitchMapNeutral = {
+    'A0': Pitch.a0,
+    'B0': Pitch.b0,
+
+    'C1': Pitch.c1,
+    'D1': Pitch.d1,
+    'E1': Pitch.e1,
+    'F1': Pitch.f1,
+    'G1': Pitch.g1,
+    'A1': Pitch.a1,
+    'B1': Pitch.b1,
+
+    'C2': Pitch.c2,
+    'D2': Pitch.d2,
+    'E2': Pitch.e2,
+    'F2': Pitch.f2,
+    'G2': Pitch.g2,
+    'A2': Pitch.a2,
+    'B2': Pitch.b2,
+
+    'C3': Pitch.c3,
+    'D3': Pitch.d3,
+    'E3': Pitch.e3,
+    'F3': Pitch.f3,
+    'G3': Pitch.g3,
+    'A3': Pitch.a3,
+    'B3': Pitch.b3,
+
+    'C4': Pitch.c4,
+    'D4': Pitch.d4,
+    'E4': Pitch.e4,
+    'F4': Pitch.f4,
+    'G4': Pitch.g4,
+    'A4': Pitch.a4,
+    'B4': Pitch.b4,
+
+    'C5': Pitch.c5,
+    'D5': Pitch.d5,
+    'E5': Pitch.e5,
+    'F5': Pitch.f5,
+    'G5': Pitch.g5,
+    'A5': Pitch.a5,
+    'B5': Pitch.b5,
+
+    'C6': Pitch.c6,
+    'D6': Pitch.d6,
+    'E6': Pitch.e6,
+    'F6': Pitch.f6,
+    'G6': Pitch.g6,
+    'A6': Pitch.a6,
+    'B6': Pitch.b6,
+
+    'C7': Pitch.c7,
+    'D7': Pitch.d7,
+    'E7': Pitch.e7,
+    'F7': Pitch.f7,
+    'G7': Pitch.g7,
+    'A7': Pitch.a7,
+    'B7': Pitch.b7,
+    
+    'C8': Pitch.c8,
+  };
 
   String getNoteStringFromMidiValue(String s) {
     return midiValueMap[s]!;
@@ -106,5 +173,9 @@ class MidiValue {
     //print("input: " + s);
     var midi_key = midiValueMap.keys.firstWhere((k) => midiValueMap[k] == s);
     return int.parse(midi_key);
+  }
+
+  Pitch getPitchByStringNeutral(String s) {
+    return stringPitchMapNeutral[s]!;
   }
 }

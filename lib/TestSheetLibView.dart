@@ -105,6 +105,7 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
     //generateChords("A");
     ChordGenerator cg = ChordGenerator(_scale_selection);
     _current_chords = cg.getChordsFromMajorScale().first;
+    print(_current_chords);
     return Scaffold(
       appBar: AppBar(title: const Text('Test Session')),
       body: Center( 
