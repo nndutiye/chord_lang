@@ -11,7 +11,6 @@ class SimpleSheetMusicView extends StatefulWidget {
 class SimpleSheetMusicViewState extends State {
   late final Measure measure1;
   late final Measure measure2;
-  late final Measure measure3;
 
   @override
   void initState() {
@@ -35,44 +34,18 @@ class SimpleSheetMusicViewState extends State {
       const Note(Pitch.a4,
           noteDuration: NoteDuration.sixteenth, accidental: Accidental.flat)
     ]);
-    measure3 = Measure(
-      [
-        const Clef(ClefType.bass),
-        const KeySignature(KeySignatureType.cMinor),
-        const ChordNote(
-          [
-            ChordNotePart(Pitch.c2),
-            ChordNotePart(Pitch.c3),
-          ],
-        ),
-        const Rest(RestType.quarter),
-        const Note(Pitch.a3,
-            noteDuration: NoteDuration.whole, accidental: Accidental.flat),
-      ],
-      isNewLine: true,
-    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final sheetMusicSize = MediaQuery.of(context).size;
-    final width = sheetMusicSize.width;
-    final height = sheetMusicSize.height / 2;
-    return Scaffold(
-        appBar: AppBar(title: const Text('Simple Sheet Music')),
-        body: Center(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: SimpleSheetMusic(
+    final width = sheetMusicSize.width * 0.75;
+    final height = sheetMusicSize.height * 0.5 * 0.75;
+    return SimpleSheetMusic(
               height: height,
               width: width,
-              measures: [measure1, measure2, measure3],
-            ),
-          ),
-        ));
+              measures: [measure1, measure2],
+            );
   }
 }

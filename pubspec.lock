@@ -82,58 +82,58 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_midi_command
-      sha256: "44e40bafdf85ffd928c30fc79c13bdd40f52d6f48c603ead684f5a6e102ba703"
+      sha256: "46cd2290b9c69fa33c7649c77a78d7a924c3a963dee43663ece986c77f734c4e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "1.1.2"
   flutter_midi_command_android:
     dependency: transitive
     description:
       name: flutter_midi_command_android
-      sha256: "2f1998443faf97aefe5befe8457f2d3962ac04b607df3bc5d20dd4e298de65cc"
+      sha256: d83191128e7335aad19d1d88dec65f07eae86518b5135402b867e238cdadd630
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "1.1.2"
   flutter_midi_command_darwin:
     dependency: transitive
     description:
       name: flutter_midi_command_darwin
-      sha256: "8de9e1aac1e6c6734d6cfb54e890cc01283d2780bb35d66cfcbe2a527eda91de"
+      sha256: "1715869fba5f70aecb313aa14dfe9c2308acd68ae541a8db15f8ba9210fa49f5"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "1.1.2"
   flutter_midi_command_linux:
     dependency: transitive
     description:
       name: flutter_midi_command_linux
-      sha256: "24fb744b16d2a07ef06cf141c3772c98f3858a2f5b2ca85f97fcbe2f1e8caa2e"
+      sha256: "7863c45340ebcd18bade725dfb1ec1d469dea7b36b750d38f09112868ed0d039"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "1.1.2"
   flutter_midi_command_platform_interface:
     dependency: transitive
     description:
       name: flutter_midi_command_platform_interface
-      sha256: a1ec8093692996d15d7d4471e61d1e6d8b291fc7c5e123b31a352e7e1d357a74
+      sha256: "30118785b7fabe925200c0f58847fd8ad2cf13eee80e96602b0edd9521e3cf0f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "1.1.2"
   flutter_midi_command_web:
     dependency: transitive
     description:
       name: flutter_midi_command_web
-      sha256: f8e96f4c32e449cdc53422bc0853c6ce30151605e90aac5e4879a43615e99575
+      sha256: "56b5ac3e927a0b0e231201f296913bf9fd611f29e7f9afae9c9fd08e9372d2d8"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "1.1.2"
   flutter_midi_command_windows:
     dependency: transitive
     description:
       name: flutter_midi_command_windows
-      sha256: "5a60a36b16b2f23fb1ac17a7c4125c2ca2c21d710474858bc83ebc306b344b17"
+      sha256: f01faec0b298b41de559eae377999f90cf6cbd5a6ed413af639877744481de36
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7"
+    version: "1.1.2"
   flutter_switch:
     dependency: "direct main"
     description:
@@ -321,10 +321,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: "0016aef94fc66495ac78af5859181e3f3bf2026bd8eecc72b9565601e19ab360"
+      sha256: "5f37239c4851efcef929cea7824e76df7f2f0970aef85d66bbc430afa40e72f0"
       url: "https://pub.dev"
     source: hosted
-    version: "15.2.0"
+    version: "15.3.0"
   web:
     dependency: transitive
     description:
@@ -337,10 +337,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: ba6f4bba816c8d7e3c1580e170f3786d216951cc6b94babc3b814c08d2cb2738
+      sha256: a0b93865d5644f11cf6a8c3f6db909f1ec168958b5805f6cc684adea957cd63d
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.0"
+    version: "6.4.0"
   xml:
     dependency: transitive
     description:

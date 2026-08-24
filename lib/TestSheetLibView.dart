@@ -1,15 +1,12 @@
 import 'dart:async';
-import 'dart:js_interop';
 
 import 'package:chord_lang/SimpleSheetMusicView.dart';
-import 'package:chord_lang/main.dart';
 import 'package:chord_lang/model/ChordGenerator.dart';
 import 'package:chord_lang/model/MidiValue.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
-import 'package:simple_sheet_music/simple_sheet_music.dart';
 
 class TestsheetlibView extends StatefulWidget {
   const TestsheetlibView(this.scale_selection, this.major, {super.key});
@@ -42,6 +39,7 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
     print(cg.getTonicAsMidiValue().toString());
     print(cg.getMajorScaleNotesAsString());
   }
+
   Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(String _scale_selection) async {
     generateChords(_scale_selection);
     final midi = MidiCommand();
@@ -106,37 +104,16 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
     sub.cancel();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    //cancelSubscription(sub);
-    /*if(_major) {
-      //print("selecetd major");
-    } else {
-      //print("selected minor");
-    }
-    */
-    //print(_scale_selection);
+    
     return Scaffold(
       appBar: AppBar(title: const Text('Test Session')),
-      body: Column( 
+      body: Center( 
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          //SimpleSheetMusicView(),
-          Spacer(flex: 1),
-          Center(
-            child: OutlinedButton(
-                  onPressed: () {
-
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
-
-                  },
-
-                  child: Text('End Practice Session'),
-          ),
-          ),
-        ]
-    ),
+        child: 
+          SimpleSheetMusicView(),
+      ),
     );
   }
 }

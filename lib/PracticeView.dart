@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:js_interop';
 
 import 'package:chord_lang/main.dart';
 import 'package:chord_lang/model/ChordGenerator.dart';
