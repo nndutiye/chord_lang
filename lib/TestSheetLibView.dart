@@ -40,6 +40,7 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
     print(cg.getMajorScaleNotesAsStringList());
     print(cg.getMinorScaleNotesAsStringList());
     print(cg.getChordsFromMajorScale());
+    print(cg.getChordsFromMinorScale());
   }
 
   Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(String _scale_selection) async {
@@ -107,7 +108,7 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
 
   @override
   Widget build(BuildContext context) {
-    generateChords(_scale_selection);
+    generateChords("A");
     return Scaffold(
       appBar: AppBar(title: const Text('Test Session')),
       body: Center( 

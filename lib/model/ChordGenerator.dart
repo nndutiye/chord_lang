@@ -73,6 +73,18 @@ class ChordGenerator {
     return result;
   }
 
+  List<List<String>> getChordsFromMinorScale() {
+    List<List<String>> result = [];
+
+    int note_counter = 0;
+    for (String quality in chord_qualities_minor) {
+      result.add(getSingleChordList(minor_scale_notes[note_counter], quality));
+      note_counter++;
+    }
+
+    return result;
+  }
+
   List<String> getSingleChordList(String root, String quality) {
     List<String> result = [];
     MidiValue mv = MidiValue();
