@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_sheet_music/simple_sheet_music.dart';
 
 class SimpleSheetMusicView extends StatefulWidget {
-  const SimpleSheetMusicView({super.key});
+  const SimpleSheetMusicView(List<String> chords_to_show, {super.key});
 
   @override
   State<StatefulWidget> createState() => SimpleSheetMusicViewState();
@@ -14,6 +14,7 @@ class SimpleSheetMusicViewState extends State {
 
   @override
   void initState() {
+    print("Pitch:" + Pitch.a0.position.toString());
     measure1 = Measure([
       const Clef(ClefType.treble),
       const KeySignature(KeySignatureType.dMajor),

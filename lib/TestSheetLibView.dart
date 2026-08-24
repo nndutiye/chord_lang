@@ -25,13 +25,7 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
   bool _major = true;
   String _scale_selection = "";
   //bool _played_correct_chord = false;
-  String _chord_image_name = 'assets/images/Am.png';
-
-  void _newChord(String s) {
-    setState(() {
-      _chord_image_name = s;
-    });
-  }
+  List<String> _current_chords = [];
 
   void generateChords(String s){
     ChordGenerator cg = ChordGenerator(s);
@@ -87,7 +81,7 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
 
         if(setEquals(testChord, noteCharList.toSet())){
           print("played correct note");
-          _newChord('assets/images/B°.png');
+          //_newChord('assets/images/B°.png');
         }
       },
     );
@@ -108,13 +102,15 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
 
   @override
   Widget build(BuildContext context) {
-    generateChords("A");
+    //generateChords("A");
+    ChordGenerator cg = ChordGenerator(_scale_selection);
+    _current_chords = cg.getChordsFromMajorScale().first;
     return Scaffold(
       appBar: AppBar(title: const Text('Test Session')),
       body: Center( 
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         child: 
-          SimpleSheetMusicView(),
+          SimpleSheetMusicView(_current_chords),
       ),
     );
   }
