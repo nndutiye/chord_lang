@@ -98,12 +98,12 @@ class MidiValue {
     '108': 'C8',
   };
 
-  String? getNoteStringFromMidiValue(String s) {
-    return this.midiValueMap[s];
+  String getNoteStringFromMidiValue(String s) {
+    return midiValueMap[s]!;
   }
 
   int getNoteMidiValue(String s) {
-    print("input: " + s);
+    //print("input: " + s);
     var midi_key = midiValueMap.keys.firstWhere((k) => midiValueMap[k] == s);
     return int.parse(midi_key);
   }

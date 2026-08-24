@@ -37,7 +37,7 @@ class _PracticeviewState extends State<Practiceview> {
     ChordGenerator cg = ChordGenerator(s);
     print(cg.getTonicAsMidiString());
     print(cg.getTonicAsMidiValue().toString());
-    print(cg.getMajorScaleNotesAsString());
+    //print(cg.getMajorScaleNotesAsString());
   }
   Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(String _scale_selection) async {
     generateChords(_scale_selection);
