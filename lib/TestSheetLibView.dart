@@ -109,7 +109,6 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
 
   @override
   Widget build(BuildContext context) {
-    Future<StreamSubscription<MidiDataReceivedEvent>> sub = connectToMidiDevice(_scale_selection);
     //cancelSubscription(sub);
     /*if(_major) {
       //print("selecetd major");
@@ -121,14 +120,13 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
     return Scaffold(
       appBar: AppBar(title: const Text('Test Session')),
       body: Column( 
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const SimpleSheetMusicView(),
+          //SimpleSheetMusicView(),
           Spacer(flex: 1),
           Center(
             child: OutlinedButton(
                   onPressed: () {
-                    cancelSubscription(sub);
-
 
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
 
