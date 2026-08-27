@@ -165,6 +165,16 @@ class MidiValue {
     'C8': Pitch.c8,
   };
 
+  Map<String,KeySignatureType> keySignatureMap = {
+    'C': KeySignatureType.cMajor,
+    'G': KeySignatureType.gMajor, 
+    'F': KeySignatureType.fMajor, 
+    'D': KeySignatureType.dMajor, 
+    'A': KeySignatureType.aMajor, 
+    'E': KeySignatureType.eMajor, 
+    'B': KeySignatureType.bMajor,
+  };
+
   String getNoteStringFromMidiValue(String s) {
     return midiValueMap[s]!;
   }
@@ -178,4 +188,6 @@ class MidiValue {
   Pitch getPitchByStringNeutral(String s) {
     return stringPitchMapNeutral[s]!;
   }
+
+  KeySignatureType getKeySignatureType(String s) => keySignatureMap[s]!;
 }

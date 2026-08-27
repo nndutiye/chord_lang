@@ -78,6 +78,7 @@ class ChordGenerator {
 
     int note_counter = 0;
     for (String quality in chord_qualities_minor) {
+      print(quality);
       result.add(getSingleChordList(minor_scale_notes[note_counter], quality));
       note_counter++;
     }
@@ -103,6 +104,7 @@ class ChordGenerator {
       result.add(mv.getNoteStringFromMidiValue(tmp_result.toString()));
     }
 
+    print("Tmp result 1: " + tmp_result.toString());
     // 3
     if(quality == "Major" || quality == "Diminisched") {
       tmp_result = tmp_result + 3;
@@ -111,6 +113,8 @@ class ChordGenerator {
       tmp_result = tmp_result + 4;
       result.add(mv.getNoteStringFromMidiValue(tmp_result.toString()));
     }
+
+    print("Tmp result 2: " + tmp_result.toString());
 
     return result;
   }

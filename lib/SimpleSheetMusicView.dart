@@ -3,45 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:simple_sheet_music/simple_sheet_music.dart';
 
 class SimpleSheetMusicView extends StatefulWidget {
-  const SimpleSheetMusicView(List<String> this.chords_to_show, {super.key});
+  const SimpleSheetMusicView(List<String> this.chords_to_show, this.current_scale, {super.key});
   final List<String> chords_to_show;
+  final String current_scale;
   @override
-  State<StatefulWidget> createState() => SimpleSheetMusicViewState(chords_to_show);
+  State<StatefulWidget> createState() => SimpleSheetMusicViewState(chords_to_show, current_scale);
 }
 
 class SimpleSheetMusicViewState extends State {
-  SimpleSheetMusicViewState(List<String> list) {
+  SimpleSheetMusicViewState(List<String> list, String current_scale) {
     this.chord_notes = list;
+    this.current_scale = current_scale;
   }
   late final List<String> chord_notes;
+  late final String current_scale;
   late final Measure measure1;
-  late final Measure measure2;
 
   @override
   void initState() {
     MidiValue mv = MidiValue();
-    print(chord_notes[0]);
+    print("Chord notes: " + chord_notes.toString());
     //print("Pitch:");
     measure1 = Measure([
       const Clef(ClefType.treble),
-      const KeySignature(KeySignatureType.cMajor),
+      KeySignature(mv.getKeySignatureType(current_scale)),
       ChordNote([
         ChordNotePart(mv.getPitchByStringNeutral(chord_notes[0])),
         ChordNotePart(mv.getPitchByStringNeutral(chord_notes[1])),
         ChordNotePart(mv.getPitchByStringNeutral(chord_notes[2])),
       ]),
-      const Rest(RestType.quarter),
-      const Note(Pitch.a4,
-          noteDuration: NoteDuration.sixteenth, accidental: Accidental.flat),
-      const Rest(RestType.sixteenth),
-    ]);
-    measure2 = Measure([
-      const ChordNote([
-        ChordNotePart(Pitch.c4),
-        ChordNotePart(Pitch.c5),
-      ], noteDuration: NoteDuration.sixteenth),
-      const Note(Pitch.a4,
-          noteDuration: NoteDuration.sixteenth, accidental: Accidental.flat)
     ]);
     super.initState();
   }
@@ -54,7 +44,7 @@ class SimpleSheetMusicViewState extends State {
     return SimpleSheetMusic(
               height: height,
               width: width,
-              measures: [measure1, measure2],
+              measures: [measure1],
             );
   }
 }

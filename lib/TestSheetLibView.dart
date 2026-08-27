@@ -104,14 +104,18 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
   Widget build(BuildContext context) {
     //generateChords("A");
     ChordGenerator cg = ChordGenerator(_scale_selection);
-    _current_chords = cg.getChordsFromMajorScale().first;
+    if(_major) {
+      _current_chords = cg.getChordsFromMajorScale().first;
+    } else {
+      _current_chords = cg.getChordsFromMinorScale().first;
+    }
     print(_current_chords);
     return Scaffold(
       appBar: AppBar(title: const Text('Test Session')),
       body: Center( 
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         child: 
-          SimpleSheetMusicView(_current_chords),
+          SimpleSheetMusicView(_current_chords, _scale_selection),
       ),
     );
   }
