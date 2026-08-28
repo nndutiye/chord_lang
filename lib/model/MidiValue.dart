@@ -250,7 +250,7 @@ class MidiValue {
     //'107' : 'B7',
     
     //'108': 'C8',
-  }
+  };
 
   Map<String,Pitch> stringPitchMapNeutral = {
     'A0': Pitch.a0,
@@ -322,7 +322,20 @@ class MidiValue {
     'D': KeySignatureType.dMajor, 
     'A': KeySignatureType.aMajor, 
     'E': KeySignatureType.eMajor, 
-    'B': KeySignatureType.bMajor,
+    //'B': KeySignatureType.bMajor,
+    'Bb': KeySignatureType.bFlatMajor,
+    'Eb': KeySignatureType.eFlatMajor,
+    'Ab': KeySignatureType.aFlatMajor,
+    'F#': KeySignatureType.fSharpMajor,
+    'Em': KeySignatureType.eMinor,
+    'Bm': KeySignatureType.bMinor,
+    'F#m': KeySignatureType.fSharpMajor,
+    'C#m': KeySignatureType.cSharpMinor,
+    'Dm': KeySignatureType.dMinor,
+    'Gm': KeySignatureType.gMinor,
+    'Cm': KeySignatureType.cMinor,
+    'Fm': KeySignatureType.fMinor,
+    'Am': KeySignatureType.aMinor,
   };
 
   String getNoteStringFromMidiValue(String s) {
@@ -330,12 +343,41 @@ class MidiValue {
   }
 
   int getNoteMidiValue(String s) {
-    print("input: " + s);
+    /*print("input: " + s);
     var midi_key;
     if(midiValueMap.keys.contains(s)){
       midi_key = midiValueMap.keys.firstWhere((k) => midiValueMap[k] == s);
+    } else {
+      midi_key = valueMidiMap[s];
     }
     return int.parse(midi_key);
+    */
+    var midi_key;
+    midi_key = midiValueMap.keys.firstWhere(
+      (k) => midiValueMap[k] == s,
+      orElse: () {
+        print(valueMidiMap[s].runtimeType);
+        return valueMidiMap[s]!;
+      },
+      );
+    
+    return int.parse(midi_key);
+  }
+
+  String getNoteStringByStep(String noteKey, String step) {
+    String result = "";
+    List<String> possible_note_keys = noteKey.split('/');
+
+    if (step == "down") { // sharp
+      result = possible_note_keys[0];
+      result.replaceAll('#', ' ');
+    }
+    else { // flat (we go up)
+      result = possible_note_keys[1];
+      result.replaceAll('b', ' ');
+    }
+
+    return result;
   }
 
   Pitch getPitchByStringNeutral(String s) {
