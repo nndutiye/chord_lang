@@ -1,4 +1,5 @@
 import 'package:chord_lang/model/MidiValue.dart';
+import 'package:chord_lang/model/Scale.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_sheet_music/simple_sheet_music.dart';
 
@@ -22,15 +23,27 @@ class SimpleSheetMusicViewState extends State {
   @override
   void initState() {
     MidiValue mv = MidiValue();
+    Scale scale = Scale();
+
     print("Chord notes: " + chord_notes.toString());
+    Pitch root_note = chord_notes[0].trim().split("").contains('/') ?
+                      mv.getPitchByStringTwoPossibilities(chord_notes[0], scale.hasSharps(current_scale) ? "down" : "up") :
+                      mv.getPitchByStringNeutral(chord_notes[0]);
+
+    Pitch second_note = chord_notes[1].trim().split("").contains('/') ?
+                      mv.getPitchByStringTwoPossibilities(chord_notes[1], scale.hasSharps(current_scale) ? "down" : "up") :
+                      mv.getPitchByStringNeutral(chord_notes[1]);
+    Pitch third_note = chord_notes[2].trim().split("").contains('/') ?
+                      mv.getPitchByStringTwoPossibilities(chord_notes[2], scale.hasSharps(current_scale) ? "down" : "up") :
+                      mv.getPitchByStringNeutral(chord_notes[2]);                
     //print("Pitch:");
     measure1 = Measure([
       const Clef(ClefType.treble),
       KeySignature(mv.getKeySignatureType(current_scale)),
       ChordNote([
-        ChordNotePart(mv.getPitchByStringNeutral(chord_notes[0])),
-        ChordNotePart(mv.getPitchByStringNeutral(chord_notes[1])),
-        ChordNotePart(mv.getPitchByStringNeutral(chord_notes[2])),
+        ChordNotePart(root_note),
+        ChordNotePart(second_note),
+        ChordNotePart(third_note),
       ]),
     ]);
     super.initState();

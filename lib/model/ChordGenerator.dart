@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:chord_lang/model/MidiValue.dart';
 
 // class responsible for giving certain notes and chords of a scale
@@ -104,7 +106,7 @@ class ChordGenerator {
       result.add(mv.getNoteStringFromMidiValue(tmp_result.toString()));
     }
 
-    print("Tmp result 1: " + tmp_result.toString());
+    //print("Tmp result 1: " + tmp_result.toString());
     // 3
     if(quality == "Major" || quality == "Diminisched") {
       tmp_result = tmp_result + 3;
@@ -114,7 +116,7 @@ class ChordGenerator {
       result.add(mv.getNoteStringFromMidiValue(tmp_result.toString()));
     }
 
-    print("Tmp result 2: " + tmp_result.toString());
+    //print("Tmp result 2: " + tmp_result.toString());
 
     return result;
   }

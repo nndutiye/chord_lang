@@ -356,8 +356,8 @@ class MidiValue {
     midi_key = midiValueMap.keys.firstWhere(
       (k) => midiValueMap[k] == s,
       orElse: () {
-        print(valueMidiMap[s].runtimeType);
-        return valueMidiMap[s]!;
+        //print(valueMidiMap[s].runtimeType);
+        return valueMidiMap[s.trim().split("").contains('m') ? s.replaceAll('m', '') : s]!;
       },
       );
     
@@ -380,8 +380,37 @@ class MidiValue {
     return result;
   }
 
+  String getNoteStringByStepFromSpecificNote(String noteKey, String step) {
+    String result = "";
+    List<String> possible_note_keys = noteKey.split('/');
+
+    if (step == "down") { // sharp
+      result = possible_note_keys[0];
+      result.replaceAll('#', ' ');
+    }
+    else { // flat (we go up)
+      result = possible_note_keys[1];
+      result.replaceAll('b', ' ');
+    }
+
+    return result;
+  }
+
   Pitch getPitchByStringNeutral(String s) {
-    return stringPitchMapNeutral[s]!;
+    //print("finished 2");
+    if(s.trim().split("").contains('#')) {
+      return stringPitchMapNeutral[s.replaceAll('#', '')]!;
+    } else if (s.trim().split("").contains('b')) {
+      return stringPitchMapNeutral[s.replaceAll('b', ' ')]!;
+    } else {
+      return stringPitchMapNeutral[s]!;
+    }
+
+    //return stringPitchMapNeutral[getNoteStringByStep(noteKey, step)]!;
+  }
+
+  Pitch getPitchByStringTwoPossibilities(String s, String step) {
+    return stringPitchMapNeutral[getNoteStringByStepFromSpecificNote(s, step)]!;
   }
 
   KeySignatureType getKeySignatureType(String s) => keySignatureMap[s]!;
