@@ -1,15 +1,12 @@
 import 'dart:async';
-import 'dart:js_interop';
 
 import 'package:chord_lang/SimpleSheetMusicView.dart';
-import 'package:chord_lang/main.dart';
 import 'package:chord_lang/model/ChordGenerator.dart';
 import 'package:chord_lang/model/MidiValue.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
-import 'package:simple_sheet_music/simple_sheet_music.dart';
 
 class TestsheetlibView extends StatefulWidget {
   const TestsheetlibView(this.scale_selection, this.major, {super.key});
@@ -28,22 +25,20 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
   bool _major = true;
   String _scale_selection = "";
   //bool _played_correct_chord = false;
-  String _chord_image_name = 'assets/images/Am.png';
-
-  void _newChord(String s) {
-    setState(() {
-      _chord_image_name = s;
-    });
-  }
+  List<String> _current_chords = [];
 
   void generateChords(String s){
     ChordGenerator cg = ChordGenerator(s);
     print(cg.getTonicAsMidiString());
     print(cg.getTonicAsMidiValue().toString());
-    print(cg.getMajorScaleNotesAsString());
+    print(cg.getMajorScaleNotesAsStringList());
+    print(cg.getMinorScaleNotesAsStringList());
+    print(cg.getChordsFromMajorScale());
+    print(cg.getChordsFromMinorScale());
+    
   }
+
   Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(String _scale_selection) async {
-    generateChords(_scale_selection);
     final midi = MidiCommand();
     
     //final received = <MidiDataReceivedEvent>[];
@@ -87,7 +82,7 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
 
         if(setEquals(testChord, noteCharList.toSet())){
           print("played correct note");
-          _newChord('assets/images/B°.png');
+          //_newChord('assets/images/B°.png');
         }
       },
     );
@@ -106,39 +101,24 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
     sub.cancel();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    Future<StreamSubscription<MidiDataReceivedEvent>> sub = connectToMidiDevice(_scale_selection);
-    //cancelSubscription(sub);
-    /*if(_major) {
-      //print("selecetd major");
+    //generateChords("A");
+    
+    ChordGenerator cg = ChordGenerator(_scale_selection);
+    if(! _scale_selection.trim().split("").contains('m')) {
+      _current_chords = cg.getChordsFromMajorScale().first;
     } else {
-      //print("selected minor");
+      _current_chords = cg.getChordsFromMinorScale().first;
     }
-    */
-    //print(_scale_selection);
+    print(_current_chords);
     return Scaffold(
       appBar: AppBar(title: const Text('Test Session')),
-      body: Column( 
-        children: [
-          const SimpleSheetMusicView(),
-          Spacer(flex: 1),
-          Center(
-            child: OutlinedButton(
-                  onPressed: () {
-                    cancelSubscription(sub);
-
-
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp())); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
-
-                  },
-
-                  child: Text('End Practice Session'),
-          ),
-          ),
-        ]
-    ),
+      body: Center( 
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: 
+          SimpleSheetMusicView(_current_chords, _scale_selection),
+      ),
     );
   }
 }
