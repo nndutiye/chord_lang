@@ -129,26 +129,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 return DropdownMenuItem<String>(value: value, child: Text(value));
               }).toList(),
             ),
-            
-            FlutterSwitch(
-                  activeText: "major",
-                  inactiveText: "minor",
-                  value: _major,
-                  valueFontSize: 10.0,
-                  width: 80,
-                  height: 30,
-                  borderRadius: 30.0,
-                  showOnOff: true,
-                  onToggle: (val) {
-                    setState(() {
-                      _major = val;
-                    });
-                  },
-            ),
             Spacer(),
             OutlinedButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview(_dropdownValue, _major))); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview(_dropdownValue))); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
                 //Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestsheetlibView(_dropdownValue,_major)));
                 //Navigator.of(context).push(MaterialPageRoute(builder: (context) => SimpleSheetMusicView()));
               },
