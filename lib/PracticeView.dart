@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:chord_lang/SimpleSheetMusicView.dart';
-import 'package:chord_lang/main.dart';
 import 'package:chord_lang/model/ChordGenerator.dart';
 import 'package:chord_lang/model/MidiValue.dart';
 import 'package:flutter/foundation.dart';
@@ -23,27 +22,10 @@ class _PracticeviewState extends State<Practiceview> {
   }
   
   String _scale_selection = "";
-  //bool _played_correct_chord = false;
-  String _chord_image_name = 'assets/images/Am.png';
   List<String> _current_chords = [];
 
-  void _newChord(String s) {
-    setState(() {
-      _chord_image_name = s;
-    });
-  }
-
-  void generateChords(String s){
-    ChordGenerator cg = ChordGenerator(s);
-    print(cg.getTonicAsMidiString());
-    print(cg.getTonicAsMidiValue().toString());
-    //print(cg.getMajorScaleNotesAsString());
-  }
   Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(String _scale_selection) async {
-    //generateChords(_scale_selection);
     final midi = MidiCommand();
-    
-    //final received = <MidiDataReceivedEvent>[];
 
     final device = (await midi.devices)!.first;
 
@@ -65,12 +47,9 @@ class _PracticeviewState extends State<Practiceview> {
       (data) {
         MidiMessage midiMessage = data.message;
         String noteInput = midiMessage.data[1].toString();
-        //print('U8intlist: $s');
 
         MidiValue mv = MidiValue();
-        String noteChar = mv.getNoteStringFromMidiValue(noteInput)!;
-
-        //print('Note Char: $noteChar');
+        String noteChar = mv.getNoteStringFromMidiValue(noteInput);
 
         if((midiMessage is! NoteOnMessage)) {
           noteCharList.remove(noteChar);
@@ -84,7 +63,6 @@ class _PracticeviewState extends State<Practiceview> {
 
         if(setEquals(testChord, noteCharList.toSet())){
           print("played correct note");
-          _newChord('assets/images/B°.png');
         }
       },
     );
@@ -92,10 +70,6 @@ class _PracticeviewState extends State<Practiceview> {
     noteCharList.clear();
 
     return sub_init;
-
-    //await Future<void>.delayed(const Duration(seconds: 1000));
-    //print("cancel");
-    //sub.cancel();
   }
 
   void cancelSubscription(Future<StreamSubscription<MidiDataReceivedEvent>> s) async {
@@ -103,20 +77,19 @@ class _PracticeviewState extends State<Practiceview> {
     sub.cancel();
   }
 
-
   @override
   Widget build(BuildContext context) {
     ChordGenerator cg = ChordGenerator(_scale_selection);
+
     if(! _scale_selection.trim().split("").contains('m')) {
       _current_chords = cg.getChordsFromMajorScale().first;
     } else {
       _current_chords = cg.getChordsFromMinorScale().first;
     }
-    //print(_current_chords);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),
       body: Center( 
-        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         child: 
           SimpleSheetMusicView(_current_chords, _scale_selection),
       ),
