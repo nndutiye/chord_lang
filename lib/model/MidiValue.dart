@@ -329,7 +329,7 @@ class MidiValue {
     'F#': KeySignatureType.fSharpMajor,
     'Em': KeySignatureType.eMinor,
     'Bm': KeySignatureType.bMinor,
-    'F#m': KeySignatureType.fSharpMajor,
+    'F#m': KeySignatureType.fSharpMinor,
     'C#m': KeySignatureType.cSharpMinor,
     'Dm': KeySignatureType.dMinor,
     'Gm': KeySignatureType.gMinor,
@@ -352,12 +352,18 @@ class MidiValue {
     }
     return int.parse(midi_key);
     */
+    String note = s;
+
+    if(note.trim().split("").contains('m')) {
+      note = note.replaceAll('m', '');
+    }
+
     var midi_key;
     midi_key = midiValueMap.keys.firstWhere(
-      (k) => midiValueMap[k] == s,
+      (k) => midiValueMap[k] == note,
       orElse: () {
         //print(valueMidiMap[s].runtimeType);
-        return valueMidiMap[s.trim().split("").contains('m') ? s.replaceAll('m', '') : s]!;
+        return valueMidiMap[note]!;
       },
       );
     
@@ -386,24 +392,29 @@ class MidiValue {
 
     if (step == "down") { // sharp
       result = possible_note_keys[0];
-      result.replaceAll('#', ' ');
+      result = result.replaceAll('#', '');
     }
     else { // flat (we go up)
       result = possible_note_keys[1];
-      result.replaceAll('b', ' ');
+      result = result.replaceAll('b', '');
     }
 
     return result;
   }
 
   Pitch getPitchByStringNeutral(String s) {
+    String note = s;
+
+    if(note.trim().split("").contains('m')) {
+      note = note.replaceAll('m', '');
+    }
     //print("finished 2");
-    if(s.trim().split("").contains('#')) {
-      return stringPitchMapNeutral[s.replaceAll('#', '')]!;
-    } else if (s.trim().split("").contains('b')) {
-      return stringPitchMapNeutral[s.replaceAll('b', ' ')]!;
+    if(note.trim().split("").contains('#')) {
+      return stringPitchMapNeutral[note.replaceAll('#', '')]!;
+    } else if (note.trim().split("").contains('b')) {
+      return stringPitchMapNeutral[note.replaceAll('b', '')]!;
     } else {
-      return stringPitchMapNeutral[s]!;
+      return stringPitchMapNeutral[note]!;
     }
 
     //return stringPitchMapNeutral[getNoteStringByStep(noteKey, step)]!;

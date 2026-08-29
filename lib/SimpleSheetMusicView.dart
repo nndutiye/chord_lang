@@ -24,7 +24,7 @@ class SimpleSheetMusicViewState extends State {
   void initState() {
     MidiValue mv = MidiValue();
     Scale scale = Scale();
-
+    
     print("Chord notes: " + chord_notes.toString());
     Pitch root_note = chord_notes[0].trim().split("").contains('/') ?
                       mv.getPitchByStringTwoPossibilities(chord_notes[0], scale.hasSharps(current_scale) ? "down" : "up") :
