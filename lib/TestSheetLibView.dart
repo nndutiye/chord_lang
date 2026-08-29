@@ -103,7 +103,6 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
 
   @override
   Widget build(BuildContext context) {
-    //generateChords("A");
     
     ChordGenerator cg = ChordGenerator(_scale_selection);
     if(! _scale_selection.trim().split("").contains('m')) {
