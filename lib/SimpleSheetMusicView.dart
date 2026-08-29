@@ -36,7 +36,6 @@ class SimpleSheetMusicViewState extends State {
     Pitch third_note = chord_notes[2].trim().split("").contains('/') ?
                       mv.getPitchByStringTwoPossibilities(chord_notes[2], scale.hasSharps(current_scale) ? "down" : "up") :
                       mv.getPitchByStringNeutral(chord_notes[2]);                
-    //print("Pitch:");
     measure1 = Measure([
       const Clef(ClefType.treble),
       KeySignature(mv.getKeySignatureType(current_scale)),

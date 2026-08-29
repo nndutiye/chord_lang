@@ -1,13 +1,7 @@
-import 'package:chord_lang/TestSheetLibView.dart';
-import 'package:flutter_switch/flutter_switch.dart';
-
 import 'package:chord_lang/PracticeView.dart';
 import 'package:chord_lang/model/Scale.dart';
-import 'package:chord_lang/model/notes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
-import 'package:simple_sheet_music/simple_sheet_music.dart';
-//import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -24,20 +18,11 @@ class MyApp extends StatelessWidget {
       device,
       awaitConnectionTimeout: const Duration(seconds: 10),
     );
-    
-    /*
-    midi.sendData(
-      NoteOnMessage(channel: 0, note: 60, velocity: 100).generateData(),
-      deviceId: device.id,
-    );
-    */
-    
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    //connectToMidiDevice();
     
     return MaterialApp(
       title: 'Chord Lang',
@@ -129,28 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 return DropdownMenuItem<String>(value: value, child: Text(value));
               }).toList(),
             ),
-            
-            FlutterSwitch(
-                  activeText: "major",
-                  inactiveText: "minor",
-                  value: _major,
-                  valueFontSize: 10.0,
-                  width: 80,
-                  height: 30,
-                  borderRadius: 30.0,
-                  showOnOff: true,
-                  onToggle: (val) {
-                    setState(() {
-                      _major = val;
-                    });
-                  },
-            ),
             Spacer(),
             OutlinedButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview(_dropdownValue, _major))); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
-                //Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestsheetlibView(_dropdownValue,_major)));
-                //Navigator.of(context).push(MaterialPageRoute(builder: (context) => SimpleSheetMusicView()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Practiceview(_dropdownValue))); // Source - https://stackoverflow.com/a/54165550 Posted by Suragch, modified by community. See post 'Timeline' for change history Rerieved 2026-07-30, License - CC BY-SA 4.0
               },
 
               child: Text('Start Practice Session'),

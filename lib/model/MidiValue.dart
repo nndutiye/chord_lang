@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:simple_sheet_music/simple_sheet_music.dart';
 
 class MidiValue {
@@ -322,7 +320,6 @@ class MidiValue {
     'D': KeySignatureType.dMajor, 
     'A': KeySignatureType.aMajor, 
     'E': KeySignatureType.eMajor, 
-    //'B': KeySignatureType.bMajor,
     'Bb': KeySignatureType.bFlatMajor,
     'Eb': KeySignatureType.eFlatMajor,
     'Ab': KeySignatureType.aFlatMajor,
@@ -343,15 +340,6 @@ class MidiValue {
   }
 
   int getNoteMidiValue(String s) {
-    /*print("input: " + s);
-    var midi_key;
-    if(midiValueMap.keys.contains(s)){
-      midi_key = midiValueMap.keys.firstWhere((k) => midiValueMap[k] == s);
-    } else {
-      midi_key = valueMidiMap[s];
-    }
-    return int.parse(midi_key);
-    */
     String note = s;
 
     if(note.trim().split("").contains('m')) {
@@ -359,10 +347,10 @@ class MidiValue {
     }
 
     var midi_key;
+
     midi_key = midiValueMap.keys.firstWhere(
       (k) => midiValueMap[k] == note,
       orElse: () {
-        //print(valueMidiMap[s].runtimeType);
         return valueMidiMap[note]!;
       },
       );
@@ -408,7 +396,7 @@ class MidiValue {
     if(note.trim().split("").contains('m')) {
       note = note.replaceAll('m', '');
     }
-    //print("finished 2");
+
     if(note.trim().split("").contains('#')) {
       return stringPitchMapNeutral[note.replaceAll('#', '')]!;
     } else if (note.trim().split("").contains('b')) {
@@ -417,7 +405,6 @@ class MidiValue {
       return stringPitchMapNeutral[note]!;
     }
 
-    //return stringPitchMapNeutral[getNoteStringByStep(noteKey, step)]!;
   }
 
   Pitch getPitchByStringTwoPossibilities(String s, String step) {
