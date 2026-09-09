@@ -80,17 +80,17 @@ class _PracticeviewState extends State<Practiceview> {
 
   @override
   Widget build(BuildContext context) {
-    ChordGenerator cg = ChordGenerator(_scale_selection);
+    ChordGenerator cg__ = ChordGenerator(_scale_selection);
 
-    connectToMidiDevice(cg);
+    connectToMidiDevice(cg__);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),
       body: Center( 
         child:
         ChangeNotifierProvider(
-          create: (_) => ChordGenerator(_scale_selection),
-          child: SimpleSheetMusicView(cg),
+          create: (_) => cg__,
+          child: SimpleSheetMusicView(),
         ),
           
       ),

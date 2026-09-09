@@ -1,4 +1,5 @@
 import 'package:chord_lang/model/MidiValue.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // class responsible for giving certain notes and chords of a scale
@@ -38,25 +39,41 @@ class ChordGenerator extends ChangeNotifier{
 
       if(this.major_chords_list.indexOf(this.current_chords) == this.major_chords_list.length - 1) {
         this.current_chords = this.major_chords_list.first;
-        notifyListeners();
+        //notifyListeners();
       } else {
-        int idx = this.major_chords_list.indexOf(current_chords);
+        //int idx = this.major_chords_list.indexOf(current_chords);
+        int idx = getIdxOfList(this.current_chords, this.major_chords_list);
         this.current_chords = this.major_chords_list.elementAt(idx + 1);
-        notifyListeners();
+        //notifyListeners();
       }
 
     } else {
 
         if(this.minor_chords_list.indexOf(this.current_chords) == this.minor_chords_list.length - 1) {
         this.current_chords = this.minor_chords_list.first;
-        notifyListeners();
+        //notifyListeners();
       } else {
-        int idx = this.minor_chords_list.indexOf(current_chords);
+        int idx = getIdxOfList(this.current_chords, this.minor_chords_list);
         this.current_chords = this.minor_chords_list.elementAt(idx + 1);
-        notifyListeners();
+        //notifyListeners();
       }
 
     }
+
+    notifyListeners();
+  }
+
+  int getIdxOfList(List<String> l, List<List<String>> cl) {
+    int idx = 0;
+    int result = 0;
+    for (List<String> e in cl) {
+      if(setEquals(l.toSet(),e.toSet())) {
+        result = idx;
+      }
+      idx++;
+    }
+
+    return result;
   }
 
   String getScale() {
