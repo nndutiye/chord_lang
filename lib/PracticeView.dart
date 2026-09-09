@@ -22,9 +22,9 @@ class _PracticeviewState extends State<Practiceview> {
   }
   
   String _scale_selection = "";
-  List<String> _current_chords = [];
+  //List<String> _current_chords = [];
 
-  Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(String _scale_selection) async {
+  Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(ChordGenerator cg) async {
     final midi = MidiCommand();
 
     final device = (await midi.devices)!.first;
@@ -38,7 +38,7 @@ class _PracticeviewState extends State<Practiceview> {
       print("conneced!");
     }
 
-    Set<String> testChord = {"C3", "E3", "G3"};
+    //Set<String> testChord = {"C3", "E3", "G3"};
     // This is the centerpiece of the whole application
     List<String> noteCharList = [];
     List<String> chordNameList = []; // has to be generated
@@ -61,7 +61,7 @@ class _PracticeviewState extends State<Practiceview> {
 
         print(noteCharList);
 
-        if(setEquals(testChord, noteCharList.toSet())){
+        if(setEquals(cg.getCurrentChords().toSet(), noteCharList.toSet())){
           print("played correct note");
         }
       },
@@ -81,17 +81,13 @@ class _PracticeviewState extends State<Practiceview> {
   Widget build(BuildContext context) {
     ChordGenerator cg = ChordGenerator(_scale_selection);
 
-    if(! _scale_selection.trim().split("").contains('m')) {
-      _current_chords = cg.getChordsFromMajorScale().first;
-    } else {
-      _current_chords = cg.getChordsFromMinorScale().first;
-    }
+    connectToMidiDevice(cg);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),
       body: Center( 
         child: 
-          SimpleSheetMusicView(_current_chords, _scale_selection),
+          SimpleSheetMusicView(cg),
       ),
     );
   }

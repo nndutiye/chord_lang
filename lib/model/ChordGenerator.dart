@@ -1,7 +1,8 @@
 import 'package:chord_lang/model/MidiValue.dart';
+import 'package:flutter/material.dart';
 
 // class responsible for giving certain notes and chords of a scale
-class ChordGenerator {
+class ChordGenerator extends ChangeNotifier{
   late String scale;
   static const List<int> major_half_steps = [2,2,1,2,2,2]; // last one should be 1 but it's the tonic
   static const List<int> minor_half_steps = [2,1,2,2,1,2]; // last one should be 2 but it's the tonic
@@ -10,11 +11,27 @@ class ChordGenerator {
   late final List<String> major_scale_notes;
   late final List<String> minor_scale_notes;
 
+  List<String> current_chords = [];
+
   
    ChordGenerator(String scale) {
     this.scale = scale;
     this.major_scale_notes = setMajorScaleNotesAsString();
     this.minor_scale_notes = setMinorScaleNotesAsString();
+    
+    if(! scale.trim().split("").contains('m')) {
+      this.current_chords = getChordsFromMajorScale().first;
+    } else {
+      this.current_chords = getChordsFromMinorScale().first;
+    }
+  }
+
+  String getScale() {
+    return this.scale;
+  }
+
+  List<String> getCurrentChords() {
+    return this.current_chords;
   }
   
   String getTonicAsMidiString() {
