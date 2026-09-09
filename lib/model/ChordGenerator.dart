@@ -12,6 +12,10 @@ class ChordGenerator extends ChangeNotifier{
   late final List<String> minor_scale_notes;
 
   List<String> current_chords = [];
+  List<List<String>> major_chords_list = [];
+  List<List<String>> minor_chords_list = [];
+
+  bool major = false;
 
   
    ChordGenerator(String scale) {
@@ -20,9 +24,38 @@ class ChordGenerator extends ChangeNotifier{
     this.minor_scale_notes = setMinorScaleNotesAsString();
     
     if(! scale.trim().split("").contains('m')) {
+      this.major = true;
+      this.major_chords_list = getChordsFromMajorScale();
       this.current_chords = getChordsFromMajorScale().first;
     } else {
+      this.minor_chords_list = getChordsFromMinorScale();
       this.current_chords = getChordsFromMinorScale().first;
+    }
+  }
+
+  void setNewChords() {
+    if (major) {
+
+      if(this.major_chords_list.indexOf(this.current_chords) == this.major_chords_list.length - 1) {
+        this.current_chords = this.major_chords_list.first;
+        notifyListeners();
+      } else {
+        int idx = this.major_chords_list.indexOf(current_chords);
+        this.current_chords = this.major_chords_list.elementAt(idx + 1);
+        notifyListeners();
+      }
+
+    } else {
+
+        if(this.minor_chords_list.indexOf(this.current_chords) == this.minor_chords_list.length - 1) {
+        this.current_chords = this.minor_chords_list.first;
+        notifyListeners();
+      } else {
+        int idx = this.minor_chords_list.indexOf(current_chords);
+        this.current_chords = this.minor_chords_list.elementAt(idx + 1);
+        notifyListeners();
+      }
+
     }
   }
 

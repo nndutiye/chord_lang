@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
+import 'package:provider/provider.dart';
 
 class Practiceview extends StatefulWidget {
   const Practiceview(this.scale_selection, {super.key});
@@ -62,7 +63,7 @@ class _PracticeviewState extends State<Practiceview> {
         print(noteCharList);
 
         if(setEquals(cg.getCurrentChords().toSet(), noteCharList.toSet())){
-          print("played correct note");
+          cg.setNewChords();
         }
       },
     );
@@ -86,8 +87,12 @@ class _PracticeviewState extends State<Practiceview> {
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),
       body: Center( 
-        child: 
-          SimpleSheetMusicView(cg),
+        child:
+        ChangeNotifierProvider(
+          create: (_) => ChordGenerator(_scale_selection),
+          child: SimpleSheetMusicView(cg),
+        ),
+          
       ),
     );
   }

@@ -116,7 +116,8 @@ class _TestsheetlibViewState extends State<TestsheetlibView> {
       body: Center( 
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         child: 
-          SimpleSheetMusicView(_current_chords, _scale_selection),
+          //SimpleSheetMusicView(_current_chords, _scale_selection),
+          Text('Test Session'),
       ),
     );
   }
