@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
 import 'package:flutter_midi_command/flutter_midi_command_messages.dart';
+import 'package:provider/provider.dart';
 
 class Practiceview extends StatefulWidget {
   const Practiceview(this.scale_selection, {super.key});
@@ -22,9 +23,9 @@ class _PracticeviewState extends State<Practiceview> {
   }
   
   String _scale_selection = "";
-  List<String> _current_chords = [];
+  //List<String> _current_chords = [];
 
-  Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(String _scale_selection) async {
+  Future<StreamSubscription<MidiDataReceivedEvent>> connectToMidiDevice(ChordGenerator cg) async {
     final midi = MidiCommand();
 
     final device = (await midi.devices)!.first;
@@ -38,7 +39,7 @@ class _PracticeviewState extends State<Practiceview> {
       print("conneced!");
     }
 
-    Set<String> testChord = {"C3", "E3", "G3"};
+    //Set<String> testChord = {"C3", "E3", "G3"};
     // This is the centerpiece of the whole application
     List<String> noteCharList = [];
     List<String> chordNameList = []; // has to be generated
@@ -61,8 +62,8 @@ class _PracticeviewState extends State<Practiceview> {
 
         print(noteCharList);
 
-        if(setEquals(testChord, noteCharList.toSet())){
-          print("played correct note");
+        if(setEquals(cg.getCurrentChords().toSet(), noteCharList.toSet())){
+          cg.setNewChords();
         }
       },
     );
@@ -79,19 +80,19 @@ class _PracticeviewState extends State<Practiceview> {
 
   @override
   Widget build(BuildContext context) {
-    ChordGenerator cg = ChordGenerator(_scale_selection);
+    ChordGenerator cg__ = ChordGenerator(_scale_selection);
 
-    if(! _scale_selection.trim().split("").contains('m')) {
-      _current_chords = cg.getChordsFromMajorScale().first;
-    } else {
-      _current_chords = cg.getChordsFromMinorScale().first;
-    }
+    connectToMidiDevice(cg__);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),
       body: Center( 
-        child: 
-          SimpleSheetMusicView(_current_chords, _scale_selection),
+        child:
+        ChangeNotifierProvider(
+          create: (_) => cg__,
+          child: SimpleSheetMusicView(),
+        ),
+          
       ),
     );
   }
