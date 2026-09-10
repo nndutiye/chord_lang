@@ -112,7 +112,8 @@ class SimpleSheetMusicView extends StatelessWidget {
                           mv.getPitchByStringTwoPossibilities(chord_notes[2], scale.hasSharps(current_scale) ? "down" : "up") :
                           mv.getPitchByStringNeutral(chord_notes[2]); 
 
-        return SimpleSheetMusic(
+        return Stack(
+                children: [SimpleSheetMusic(
           height: height,
           width: width,
           measures: [
@@ -126,6 +127,7 @@ class SimpleSheetMusicView extends StatelessWidget {
               ]),
             ])
           ],
+        )]
         );
       }
     );
