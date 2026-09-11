@@ -113,22 +113,41 @@ class SimpleSheetMusicView extends StatelessWidget {
                           mv.getPitchByStringNeutral(chord_notes[2]); 
 
         return Stack(
-                children: [SimpleSheetMusic(
-          height: height,
-          width: width,
-          measures: [
-            Measure([
-              const Clef(ClefType.treble),
-              KeySignature(mv.getKeySignatureType(current_scale)),
-              ChordNote([
-                ChordNotePart(root_note),
-                ChordNotePart(second_note),
-                ChordNotePart(third_note),
-              ]),
-            ])
-          ],
-        )]
-        );
+                children: [
+                  Positioned(
+                    child: SimpleSheetMusic(
+                            height: height,
+                            width: width,
+                            measures: [
+                              Measure([
+                                const Clef(ClefType.treble),
+                                /*KeySignature(mv.getKeySignatureType(current_scale)),
+                                ChordNote([
+                                  ChordNotePart(root_note),
+                                  ChordNotePart(second_note),
+                                  ChordNotePart(third_note),*/
+                                ]),
+                            ])
+                  ),
+                  Positioned(
+                    child: SimpleSheetMusic(
+                            height: height,
+                            width: width - 0.75,
+                            measures: [
+                              Measure([
+                                //const Clef(ClefType.treble),
+                                KeySignature(mv.getKeySignatureType(current_scale)),
+                                ChordNote([
+                                  ChordNotePart(root_note),
+                                  ChordNotePart(second_note),
+                                  ChordNotePart(third_note),
+                                ]),
+                              ]),
+                            ],
+                          )
+                  ),
+                  ]
+              );
       }
     );
   }
