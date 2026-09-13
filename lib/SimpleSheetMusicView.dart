@@ -51,11 +51,11 @@ class SimpleSheetMusicView extends StatelessWidget {
 
         measure.add(Chord(
           notes: [
-                    Note(pitch: Pitch(step: value.getRootWithoutOctave(), octave: value.getOctaveOfRoot()), duration: const Duration(DurationType.half)),
-                    Note(pitch: Pitch(step: value.getThirdWithoutOctave(), octave: value.getOctaveOfThird()), duration: const Duration(DurationType.half)),
-                    Note(pitch: Pitch(step: value.getFifthWithoutOctave(), octave: value.getOctaveOfFifth()), duration: const Duration(DurationType.half)),
+                    Note(pitch: Pitch(step: value.getRootWithoutOctave(), octave: value.getOctaveOfRoot()), duration: const Duration(DurationType.whole)),
+                    Note(pitch: Pitch(step: value.getThirdWithoutOctave(), octave: value.getOctaveOfThird()), duration: const Duration(DurationType.whole)),
+                    Note(pitch: Pitch(step: value.getFifthWithoutOctave(), octave: value.getOctaveOfFifth()), duration: const Duration(DurationType.whole)),
                   ],
-          duration: const Duration(DurationType.half),
+          duration: const Duration(DurationType.whole),
         ));
 
         staff.add(measure);
