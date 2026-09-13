@@ -61,9 +61,12 @@ class SimpleSheetMusicView extends StatelessWidget {
         staff.add(measure);
 
         return Scaffold(
-          body: SizedBox(
-            height: 180,
-            child: MusicScore(staff: staff),
+          body: Center(
+            child: SizedBox(
+              width: 200,
+              height: 1000,
+              child: MusicScore(staff: staff),
+            ),
           ),
         );
             
