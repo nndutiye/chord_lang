@@ -2,96 +2,21 @@ import 'package:chord_lang/model/ChordGenerator.dart';
 import 'package:chord_lang/model/MidiValue.dart';
 import 'package:chord_lang/model/Scale.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_sheet_music/simple_sheet_music.dart';
+import 'package:flutter_notemus/flutter_notemus.dart';
 import 'package:provider/provider.dart';
 
 class SimpleSheetMusicView extends StatelessWidget {
   const SimpleSheetMusicView({super.key});
-  //final ChordGenerator cg;
-  //@override
-  //State<StatefulWidget> createState() => SimpleSheetMusicViewState(cg.getCurrentChords(), cg.);
 
-
-/*class SimpleSheetMusicViewState extends State {
-  SimpleSheetMusicViewState(List<String> list) {
-    this.chord_notes = list;
-    this.current_scale = current_scale;
-  }
-  late final List<String> chord_notes;
-  late final String current_scale;
-  late final Measure measure1;
-
-  @override
-  void initState() {
-    MidiValue mv = MidiValue();
-    Scale scale = Scale();
-    
-    print("Chord notes: " + chord_notes.toString());
-    Pitch root_note = chord_notes[0].trim().split("").contains('/') ?
-                      mv.getPitchByStringTwoPossibilities(chord_notes[0], scale.hasSharps(current_scale) ? "down" : "up") :
-                      mv.getPitchByStringNeutral(chord_notes[0]);
-
-    Pitch second_note = chord_notes[1].trim().split("").contains('/') ?
-                      mv.getPitchByStringTwoPossibilities(chord_notes[1], scale.hasSharps(current_scale) ? "down" : "up") :
-                      mv.getPitchByStringNeutral(chord_notes[1]);
-    Pitch third_note = chord_notes[2].trim().split("").contains('/') ?
-                      mv.getPitchByStringTwoPossibilities(chord_notes[2], scale.hasSharps(current_scale) ? "down" : "up") :
-                      mv.getPitchByStringNeutral(chord_notes[2]);                
-    measure1 = Measure([
-      const Clef(ClefType.treble),
-      KeySignature(mv.getKeySignatureType(current_scale)),
-      ChordNote([
-        ChordNotePart(root_note),
-        ChordNotePart(second_note),
-        ChordNotePart(third_note),
-      ]),
-    ]);
-    super.initState();
-  }*/
 
   @override
   Widget build(BuildContext context) {
-    /*final sheetMusicSize = MediaQuery.of(context).size;
-    final width = sheetMusicSize.width * 0.75;
-    final height = sheetMusicSize.height * 0.5 * 0.75;
-
-    MidiValue mv = MidiValue();
-
-    List<String> chord_notes = cg.getCurrentChords();
-    String current_scale = cg.getScale();
-    Scale scale = Scale();
-
-    Measure measure1;
-
-    print("Chord notes: " + chord_notes.toString());
-    Pitch root_note = chord_notes[0].trim().split("").contains('/') ?
-                      mv.getPitchByStringTwoPossibilities(chord_notes[0], scale.hasSharps(current_scale) ? "down" : "up") :
-                      mv.getPitchByStringNeutral(chord_notes[0]);
-
-    Pitch second_note = chord_notes[1].trim().split("").contains('/') ?
-                      mv.getPitchByStringTwoPossibilities(chord_notes[1], scale.hasSharps(current_scale) ? "down" : "up") :
-                      mv.getPitchByStringNeutral(chord_notes[1]);
-    Pitch third_note = chord_notes[2].trim().split("").contains('/') ?
-                      mv.getPitchByStringTwoPossibilities(chord_notes[2], scale.hasSharps(current_scale) ? "down" : "up") :
-                      mv.getPitchByStringNeutral(chord_notes[2]);                
-    measure1 = Measure([
-      const Clef(ClefType.treble),
-      KeySignature(mv.getKeySignatureType(current_scale)),
-      ChordNote([
-        ChordNotePart(root_note),
-        ChordNotePart(second_note),
-        ChordNotePart(third_note),
-        ]),
-    ]);
-    */
+    
 
     return Consumer<ChordGenerator>(
       
       builder: (context, value, child) {
-        final sheetMusicSize = MediaQuery.of(context).size;
-        final width = sheetMusicSize.width * 0.75;
-        final height = sheetMusicSize.height * 0.5 * 0.75;
-
+      
         MidiValue mv = MidiValue();
 
         List<String> chord_notes = value.getCurrentChords();
@@ -101,32 +26,50 @@ class SimpleSheetMusicView extends StatelessWidget {
         //Measure measure1;
 
         print("Chord notes: " + chord_notes.toString());
-        Pitch root_note = chord_notes[0].trim().split("").contains('/') ?
-                          mv.getPitchByStringTwoPossibilities(chord_notes[0], scale.hasSharps(current_scale) ? "down" : "up") :
-                          mv.getPitchByStringNeutral(chord_notes[0]);
 
-        Pitch second_note = chord_notes[1].trim().split("").contains('/') ?
-                          mv.getPitchByStringTwoPossibilities(chord_notes[1], scale.hasSharps(current_scale) ? "down" : "up") :
-                          mv.getPitchByStringNeutral(chord_notes[1]);
-        Pitch third_note = chord_notes[2].trim().split("").contains('/') ?
-                          mv.getPitchByStringTwoPossibilities(chord_notes[2], scale.hasSharps(current_scale) ? "down" : "up") :
-                          mv.getPitchByStringNeutral(chord_notes[2]); 
+        final staff = Staff();
+        final measure = Measure();
 
-        return SimpleSheetMusic(
-          height: height,
-          width: width,
-          measures: [
-            Measure([
-              const Clef(ClefType.treble),
-              KeySignature(mv.getKeySignatureType(current_scale)),
-              ChordNote([
-                ChordNotePart(root_note),
-                ChordNotePart(second_note),
-                ChordNotePart(third_note),
-              ]),
-            ])
-          ],
+        measure.add(Clef(clefType: ClefType.treble));
+        measure.add(TimeSignature(numerator: 4, denominator: 4));
+        /*measure.add(Note(
+          pitch: const Pitch(step: 'C', octave: 5),
+          duration: const Duration(DurationType.quarter),
+        ));
+        measure.add(Note(
+          pitch: const Pitch(step: 'E', octave: 5),
+          duration: const Duration(DurationType.quarter),
+        ));
+        measure.add(Note(
+          pitch: const Pitch(step: 'G', octave: 5),
+          duration: const Duration(DurationType.quarter),
+        ));
+        measure.add(Note(
+          pitch: const Pitch(step: 'C', octave: 6),
+          duration: const Duration(DurationType.quarter),
+        ));*/
+
+        measure.add(Chord(
+          notes: [
+                    Note(pitch: Pitch(step: value.getRootWithoutOctave(), octave: value.getOctaveOfRoot()), duration: const Duration(DurationType.whole)),
+                    Note(pitch: Pitch(step: value.getThirdWithoutOctave(), octave: value.getOctaveOfThird()), duration: const Duration(DurationType.whole)),
+                    Note(pitch: Pitch(step: value.getFifthWithoutOctave(), octave: value.getOctaveOfFifth()), duration: const Duration(DurationType.whole)),
+                  ],
+          duration: const Duration(DurationType.whole),
+        ));
+
+        staff.add(measure);
+
+        return Scaffold(
+          body: Center(
+            child: SizedBox(
+              width: 200,
+              height: 1000,
+              child: MusicScore(staff: staff),
+            ),
+          ),
         );
+            
       }
     );
   }

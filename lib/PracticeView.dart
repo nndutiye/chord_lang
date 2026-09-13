@@ -86,7 +86,7 @@ class _PracticeviewState extends State<Practiceview> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Practice Session')),
-      body: Center( 
+      body: Center(
         child:
         ChangeNotifierProvider(
           create: (_) => cg__,

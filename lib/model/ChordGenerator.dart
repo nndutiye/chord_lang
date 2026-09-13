@@ -34,6 +34,30 @@ class ChordGenerator extends ChangeNotifier{
     }
   }
 
+  String getRootWithoutOctave(){
+    return current_chords[0].split('')[0];
+  }
+
+  String getThirdWithoutOctave(){
+    return current_chords[1].split('')[0];
+  }
+
+  String getFifthWithoutOctave(){
+    return current_chords[2].split('')[0];
+  }
+
+  int getOctaveOfRoot(){
+    return int.parse(current_chords[0].split('')[1]);
+  }
+
+  int getOctaveOfThird(){
+    return int.parse(current_chords[1].split('')[1]);
+  }
+
+  int getOctaveOfFifth(){
+    return int.parse(current_chords[2].split('')[1]);
+  }
+
   void setNewChords() {
     if (major) {
 
