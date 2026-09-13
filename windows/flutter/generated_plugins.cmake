@@ -4,6 +4,8 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   flutter_midi_command_windows
+  flutter_notemus
+  printing
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
