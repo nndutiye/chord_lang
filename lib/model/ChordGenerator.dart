@@ -67,7 +67,12 @@ class ChordGenerator extends ChangeNotifier{
   }
 
   String getFifthWithoutOctave(){
-    print(current_chords[2].split('')[0]);
+    if(current_chords[2].contains('/')) {
+      List<String> two_possible_notes = current_chords[2].split('/');
+      String resulting_note = sharps ? two_possible_notes[0].replaceAll('#', '') : two_possible_notes[1].replaceAll('b', '');
+      return resulting_note.split('')[0];
+    }
+
     return current_chords[2].split('')[0];
   }
 
