@@ -18,6 +18,11 @@ class ChordGenerator extends ChangeNotifier{
 
   bool major = false;
 
+  // 0: nothing, -1: flat, 1: sharp 
+  int root_accidentals = 0;
+  int third_accidentals = 0;
+  int fifth_accidentals = 0;
+
   
    ChordGenerator(String scale) {
     this.scale = scale;
@@ -35,27 +40,32 @@ class ChordGenerator extends ChangeNotifier{
   }
 
   String getRootWithoutOctave(){
+    print(current_chords[0].split('')[0]);
     return current_chords[0].split('')[0];
   }
 
   String getThirdWithoutOctave(){
+    print(current_chords[1].split('')[0]);
     return current_chords[1].split('')[0];
   }
 
   String getFifthWithoutOctave(){
+    print(current_chords[2].split('')[0]);
     return current_chords[2].split('')[0];
   }
 
   int getOctaveOfRoot(){
-    return int.parse(current_chords[0].split('')[1]);
+    //print(current_chords[0].split('')[1]);
+    return int.parse(current_chords[0].replaceAll('#', '').replaceAll('m', '').split('')[1]);
   }
 
   int getOctaveOfThird(){
-    return int.parse(current_chords[1].split('')[1]);
+    //print(current_chords[1].replaceAll('#', '').replaceAll('m', '').split('')[1]);
+    return int.parse(current_chords[1].replaceAll('#', '').replaceAll('m', '').split('')[1]);
   }
 
   int getOctaveOfFifth(){
-    return int.parse(current_chords[2].split('')[1]);
+    return int.parse(current_chords[2].replaceAll('#', '').replaceAll('m', '').split('')[1]);
   }
 
   void setNewChords() {
@@ -169,7 +179,7 @@ class ChordGenerator extends ChangeNotifier{
 
     int note_counter = 0;
     for (String quality in chord_qualities_minor) {
-      print(quality);
+      //print(quality);
       result.add(getSingleChordList(minor_scale_notes[note_counter], quality));
       note_counter++;
     }
