@@ -37,6 +37,29 @@ class ChordGenerator extends ChangeNotifier{
       this.minor_chords_list = getChordsFromMinorScale();
       this.current_chords = getChordsFromMinorScale().first;
     }
+
+    if (current_chords[0].contains('#')) {
+      this.root_accidentals = 1;
+    } else if (current_chords[0].contains('b')) {
+      this.root_accidentals = -1;
+    }
+
+    if (current_chords[1].contains('#')) {
+      this.third_accidentals = 1;
+    } else if (current_chords[1].contains('b')) {
+      this.third_accidentals = -1;
+    }
+
+    if (current_chords[2].contains('#')) {
+      this.fifth_accidentals = 1;
+    } else if (current_chords[2].contains('b')) {
+      this.fifth_accidentals = -1;
+    }
+
+    print(this.root_accidentals);
+    print(this.third_accidentals);
+    print(this.fifth_accidentals);
+    print("Hello World!");
   }
 
   String getRootWithoutOctave(){
@@ -45,7 +68,7 @@ class ChordGenerator extends ChangeNotifier{
   }
 
   String getThirdWithoutOctave(){
-    print(current_chords[1].split('')[0]);
+    print(current_chords[1].split(''));
     return current_chords[1].split('')[0];
   }
 
