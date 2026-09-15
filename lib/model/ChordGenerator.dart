@@ -19,12 +19,12 @@ class ChordGenerator extends ChangeNotifier{
   bool major = false;
 
   // 0: nothing, -1: flat, 1: sharp 
-  int root_accidentals = 0;
-  int third_accidentals = 0;
-  int fifth_accidentals = 0;
+  bool sharps = false;
+  bool flats = false;
+  bool nothing = false;
 
   
-   ChordGenerator(String scale) {
+   ChordGenerator(String scale, bool hasSharps, bool hasFlats, bool hasNothing) {
     this.scale = scale;
     this.major_scale_notes = setMajorScaleNotesAsString();
     this.minor_scale_notes = setMinorScaleNotesAsString();
@@ -38,37 +38,31 @@ class ChordGenerator extends ChangeNotifier{
       this.current_chords = getChordsFromMinorScale().first;
     }
 
-    if (current_chords[0].contains('#')) {
-      this.root_accidentals = 1;
-    } else if (current_chords[0].contains('b')) {
-      this.root_accidentals = -1;
-    }
-
-    if (current_chords[1].contains('#')) {
-      this.third_accidentals = 1;
-    } else if (current_chords[1].contains('b')) {
-      this.third_accidentals = -1;
-    }
-
-    if (current_chords[2].contains('#')) {
-      this.fifth_accidentals = 1;
-    } else if (current_chords[2].contains('b')) {
-      this.fifth_accidentals = -1;
-    }
-
-    print(this.root_accidentals);
-    print(this.third_accidentals);
-    print(this.fifth_accidentals);
-    print("Hello World!");
+    this.sharps = hasSharps;
+    this.flats = hasFlats;
+    this.nothing = hasNothing;
   }
 
   String getRootWithoutOctave(){
-    print(current_chords[0].split('')[0]);
+    //print(current_chords[0].split('')[0]);
+    //return current_chords[0].split('')[0];
+
+    if(current_chords[0].contains('/')) {
+      List<String> two_possible_notes = current_chords[0].split('/');
+      String resulting_note = sharps ? two_possible_notes[0].replaceAll('#', '') : two_possible_notes[1].replaceAll('b', '');
+      return resulting_note.split('')[0];
+    }
+
     return current_chords[0].split('')[0];
   }
 
   String getThirdWithoutOctave(){
-    print(current_chords[1].split(''));
+    if(current_chords[1].contains('/')) {
+      List<String> two_possible_notes = current_chords[1].split('/');
+      String resulting_note = sharps ? two_possible_notes[0].replaceAll('#', '') : two_possible_notes[1].replaceAll('b', '');
+      return resulting_note.split('')[0];
+    }
+
     return current_chords[1].split('')[0];
   }
 
