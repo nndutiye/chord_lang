@@ -23,6 +23,9 @@ class ChordGenerator extends ChangeNotifier{
   bool flats = false;
   bool nothing = false;
 
+  bool root_is_set = false;
+  bool third_is_set = false;
+  bool fifth_is_set = false;
   
    ChordGenerator(String scale, bool hasSharps, bool hasFlats, bool hasNothing) {
     this.scale = scale;
@@ -41,6 +44,30 @@ class ChordGenerator extends ChangeNotifier{
     this.sharps = hasSharps;
     this.flats = hasFlats;
     this.nothing = hasNothing;
+
+    updateAccidentalSettings();
+
+  }
+
+  void updateAccidentalSettings() {
+    if(current_chords[0].contains('/')) {
+      this.root_is_set = true;
+    } else {
+      this.root_is_set = false;
+    }
+
+    if(current_chords[1].contains('/')) {
+      print(current_chords[1]);
+      this.third_is_set = true;
+    } else {
+      this.third_is_set = false;
+    }
+
+    if(current_chords[2].contains('/')) {
+      this.fifth_is_set = true;
+    } else {
+      this.fifth_is_set = false;
+    }
   }
 
   String getRootWithoutOctave(){
@@ -48,31 +75,36 @@ class ChordGenerator extends ChangeNotifier{
     //return current_chords[0].split('')[0];
 
     if(current_chords[0].contains('/')) {
+      //this.root_is_set = true;
       List<String> two_possible_notes = current_chords[0].split('/');
       String resulting_note = sharps ? two_possible_notes[0].replaceAll('#', '') : two_possible_notes[1].replaceAll('b', '');
       return resulting_note.split('')[0];
     }
-
+    //this.root_is_set = false;
     return current_chords[0].split('')[0];
   }
 
   String getThirdWithoutOctave(){
     if(current_chords[1].contains('/')) {
+      //this.third_is_set = true;
       List<String> two_possible_notes = current_chords[1].split('/');
       String resulting_note = sharps ? two_possible_notes[0].replaceAll('#', '') : two_possible_notes[1].replaceAll('b', '');
       return resulting_note.split('')[0];
     }
 
+    //this.third_is_set = false;
     return current_chords[1].split('')[0];
   }
 
   String getFifthWithoutOctave(){
     if(current_chords[2].contains('/')) {
+      //this.fifth_is_set = true;
       List<String> two_possible_notes = current_chords[2].split('/');
       String resulting_note = sharps ? two_possible_notes[0].replaceAll('#', '') : two_possible_notes[1].replaceAll('b', '');
       return resulting_note.split('')[0];
     }
 
+    //this.fifth_is_set = false;
     return current_chords[2].split('')[0];
   }
 
@@ -95,26 +127,28 @@ class ChordGenerator extends ChangeNotifier{
 
       if(this.major_chords_list.indexOf(this.current_chords) == this.major_chords_list.length - 1) {
         this.current_chords = this.major_chords_list.first;
-        //notifyListeners();
+        notifyListeners();
       } else {
         //int idx = this.major_chords_list.indexOf(current_chords);
         int idx = getIdxOfList(this.current_chords, this.major_chords_list);
         this.current_chords = this.major_chords_list.elementAt(idx + 1);
-        //notifyListeners();
+        notifyListeners();
       }
 
     } else {
 
         if(this.minor_chords_list.indexOf(this.current_chords) == this.minor_chords_list.length - 1) {
         this.current_chords = this.minor_chords_list.first;
-        //notifyListeners();
+        notifyListeners();
       } else {
         int idx = getIdxOfList(this.current_chords, this.minor_chords_list);
         this.current_chords = this.minor_chords_list.elementAt(idx + 1);
-        //notifyListeners();
+        notifyListeners();
       }
 
     }
+
+    updateAccidentalSettings();
 
     notifyListeners();
   }
