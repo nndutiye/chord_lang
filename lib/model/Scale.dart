@@ -49,8 +49,8 @@ class Scale {
         return -4;
       case 'Am':
         return 0;
+      default:
+        return 0;
     }
-
-    return 0;
   }
 }

@@ -83,7 +83,7 @@ class _PracticeviewState extends State<Practiceview> {
     List<bool> result = [];
     Scale s = Scale();
 
-    result.add(s.countOfAccidentals(ss) == 1);
+    result.add(s.countOfAccidentals(ss) >= 1);
 
     if (result[0]) {
       result.add(false);
@@ -93,7 +93,7 @@ class _PracticeviewState extends State<Practiceview> {
     }
 
 
-    result.add(s.countOfAccidentals(ss) == -1);
+    result.add(s.countOfAccidentals(ss) <= -1);
 
     if(result[1]) {
         result.add(false);
