@@ -60,7 +60,7 @@ class _PracticeviewState extends State<Practiceview> {
           noteCharList.add(noteChar);
         }
 
-        print(noteCharList);
+        //print(noteCharList);
 
         if(setEquals(cg.getCurrentChords().toSet(), noteCharList.toSet())){
           cg.setNewChords();
