@@ -17,7 +17,7 @@ class SimpleSheetMusicView extends StatelessWidget {
       
       builder: (context, value, child) {
       
-        MidiValue mv = MidiValue();
+        //MidiValue mv = MidiValue();
 
         List<String> chord_notes = value.getCurrentChords();
         String current_scale = value.getScale();
@@ -26,12 +26,14 @@ class SimpleSheetMusicView extends StatelessWidget {
         //Measure measure1;
 
         print("Chord notes: " + chord_notes.toString());
+        
 
         final staff = Staff();
         final measure = Measure();
-
+        
         measure.add(Clef(clefType: ClefType.treble));
-        measure.add(TimeSignature(numerator: 4, denominator: 4));
+        measure.add(KeySignature(scale.countOfAccidentals(current_scale)));
+        //measure.add(TimeSignature(numerator: 4, denominator: 4));
         /*measure.add(Note(
           pitch: const Pitch(step: 'C', octave: 5),
           duration: const Duration(DurationType.quarter),
@@ -48,12 +50,15 @@ class SimpleSheetMusicView extends StatelessWidget {
           pitch: const Pitch(step: 'C', octave: 6),
           duration: const Duration(DurationType.quarter),
         ));*/
-
+        //print(value.getRootWithoutOctave());
+        //print(value.getThirdWithoutOctave());
+        //print(value.getFifthWithoutOctave());
+        //print(Pitch(step: value.getRootWithoutOctave(), octave: value.getOctaveOfRoot(), alter: 0.0, accidentalType: null));
         measure.add(Chord(
           notes: [
-                    Note(pitch: Pitch(step: value.getRootWithoutOctave(), octave: value.getOctaveOfRoot()), duration: const Duration(DurationType.whole)),
-                    Note(pitch: Pitch(step: value.getThirdWithoutOctave(), octave: value.getOctaveOfThird()), duration: const Duration(DurationType.whole)),
-                    Note(pitch: Pitch(step: value.getFifthWithoutOctave(), octave: value.getOctaveOfFifth()), duration: const Duration(DurationType.whole)),
+                    Note(pitch: Pitch(step: value.getRootWithoutOctave(), octave: value.getOctaveOfRoot(), accidentalType: AccidentalType.custom), duration: const Duration(DurationType.whole)),
+                    Note(pitch: Pitch(step: value.getThirdWithoutOctave(), octave: value.getOctaveOfThird(), accidentalType: AccidentalType.custom), duration: const Duration(DurationType.whole)),
+                    Note(pitch: Pitch(step: value.getFifthWithoutOctave(), octave: value.getOctaveOfFifth(), accidentalType: AccidentalType.custom), duration: const Duration(DurationType.whole)),
                   ],
           duration: const Duration(DurationType.whole),
         ));
