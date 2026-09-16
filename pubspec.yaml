@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_midi_command: ^1.0.7
+  flutter_notemus: ^2.8.1
   flutter_switch: ^0.3.2
   provider: ^6.1.5+1
   simple_sheet_music: ^1.0.1

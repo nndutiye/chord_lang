@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:chord_lang/SimpleSheetMusicView.dart';
 import 'package:chord_lang/model/ChordGenerator.dart';
 import 'package:chord_lang/model/MidiValue.dart';
+import 'package:chord_lang/model/Scale.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_midi_command/flutter_midi_command.dart';
@@ -60,7 +61,7 @@ class _PracticeviewState extends State<Practiceview> {
           noteCharList.add(noteChar);
         }
 
-        print(noteCharList);
+        //print(noteCharList);
 
         if(setEquals(cg.getCurrentChords().toSet(), noteCharList.toSet())){
           cg.setNewChords();
@@ -78,9 +79,37 @@ class _PracticeviewState extends State<Practiceview> {
     sub.cancel();
   }
 
+  List<bool> getAccidentalCondition(String ss) {
+    List<bool> result = [];
+    Scale s = Scale();
+
+    result.add(s.countOfAccidentals(ss) >= 1);
+
+    if (result[0]) {
+      result.add(false);
+      result.add(false);
+
+      return result;
+    }
+
+
+    result.add(s.countOfAccidentals(ss) <= -1);
+
+    if(result[1]) {
+        result.add(false);
+
+        return result;
+    }
+
+    result.add(true);
+
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
-    ChordGenerator cg__ = ChordGenerator(_scale_selection);
+    List<bool> sharps_flats_nothing = getAccidentalCondition(_scale_selection);
+    ChordGenerator cg__ = ChordGenerator(_scale_selection, sharps_flats_nothing[0], sharps_flats_nothing[1], sharps_flats_nothing[2]);
 
     connectToMidiDevice(cg__);
 
