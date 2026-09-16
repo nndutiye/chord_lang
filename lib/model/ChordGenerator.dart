@@ -12,6 +12,9 @@ class ChordGenerator extends ChangeNotifier{
   late final List<String> major_scale_notes;
   late final List<String> minor_scale_notes;
 
+  String tonic_midi_string = "";
+  int tonic_midi_int = 0;
+
   List<String> current_chords = [];
   List<List<String>> major_chords_list = [];
   List<List<String>> minor_chords_list = [];
@@ -110,16 +113,16 @@ class ChordGenerator extends ChangeNotifier{
 
   int getOctaveOfRoot(){
     //print(current_chords[0].split('')[1]);
-    return int.parse(current_chords[0].replaceAll('#', '').replaceAll('m', '').split('')[1]);
+    return int.parse(current_chords[0].replaceAll('#', '').replaceAll('m', '').replaceAll('b', '').split('')[1]);
   }
 
   int getOctaveOfThird(){
-    //print(current_chords[1].replaceAll('#', '').replaceAll('m', '').split('')[1]);
-    return int.parse(current_chords[1].replaceAll('#', '').replaceAll('m', '').split('')[1]);
+    print(current_chords[1].replaceAll('#', '').replaceAll('m', '').replaceAll('b', '').split('')[1]);
+    return int.parse(current_chords[1].replaceAll('#', '').replaceAll('m', '').replaceAll('b', '').split('')[1]);
   }
 
   int getOctaveOfFifth(){
-    return int.parse(current_chords[2].replaceAll('#', '').replaceAll('m', '').split('')[1]);
+    return int.parse(current_chords[2].replaceAll('#', '').replaceAll('m', '').replaceAll('m', '').split('')[1]);
   }
 
   void setNewChords() {
@@ -174,22 +177,34 @@ class ChordGenerator extends ChangeNotifier{
     return this.current_chords;
   }
   
-  String getTonicAsMidiString() {
-    return '${this.scale}4';
-  }
+  /*String getTonicAsMidiString() {
+    String result = tonic_midi_string;
+    MidiValue mv = MidiValue();
 
-  int getTonicAsMidiValue() {
+    while(!this.tonic_midi_string.contains('4')){
+      this.tonic_midi_int= this.tonic_midi_int + 12;
+      this.tonic_midi_string = mv.getNoteStringFromMidiValue(this.tonic_midi_int);
+
+      result = tonic_midi_string;
+    }
+    return result;
+  }*/
+
+  /*int getTonicAsMidiValue() {
     MidiValue mv = MidiValue();
     return mv.getNoteMidiValue(getTonicAsMidiString());
-  }
+  }*/
 
   List<String> setMajorScaleNotesAsString() {
     MidiValue mv = MidiValue();
 
     List<String> result = [];
-    int current_distance = getTonicAsMidiValue();
+    this.tonic_midi_int = mv.getNoteMidiValue(this.scale + '4');
+    this.tonic_midi_string = mv.getNoteStringFromMidiValue(this.tonic_midi_int.toString());
+    
+    int current_distance = this.tonic_midi_int;
 
-    result.add(getTonicAsMidiString());
+    result.add(tonic_midi_string);
 
     for (int step in major_half_steps) {
       current_distance += step;
@@ -203,9 +218,11 @@ class ChordGenerator extends ChangeNotifier{
     MidiValue mv = MidiValue();
 
     List<String> result = [];
-    int current_distance = getTonicAsMidiValue();
+    this.tonic_midi_int = mv.getNoteMidiValue(this.scale + '4');
+    this.tonic_midi_string = mv.getNoteStringFromMidiValue(this.tonic_midi_int.toString());
 
-    result.add(getTonicAsMidiString());
+    int current_distance = this.tonic_midi_int;
+    result.add(tonic_midi_string);
 
     for (int step in minor_half_steps) {
       current_distance += step;
