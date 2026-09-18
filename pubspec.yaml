@@ -19,8 +19,17 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  msix: ^3.18.0
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
+
+msix_config:
+  display_name: M#
+  #publisher_display_name: Music Sharp
+  #identity_name: musicsharp.suite.flutterapp
+  msix_version: 1.0.0.0
+  logo_path: C:\Users\Christian\GitHub\ChordTraining\chord_lang\assets\images\sharp-image.png
+  #capabilities:
